@@ -7,37 +7,37 @@
 <meta name="description" content="HorecaMatch verzamelt horecabedrijven te koop van meerdere aanbodsites, ontdubbelt ze, en signaleert prijsdalingen en verkopen die andere sites niet laten zien.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Public+Sans:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#f5f4ee; --bg-alt:#ebe8dd; --card:#fffefb; --ink:#191f19; --ink-dim:#5f6459;
-  --line:#ddd9cb; --accent:#a9772f; --accent-ink:#7d5620; --accent-soft:#f2e6cd;
-  --brand:#183b2d; --brand-soft:#e6ede7; --brand-ink:#ffffff;
-  --good:#0d8a72; --good-soft:#e3f5ef; --bad:#b3432f; --bad-soft:#fbeae5;
-  --focus:#a9772f; --radius:10px; --shadow:0 2px 10px rgba(25,31,25,.07);
-  --shadow-lg:0 16px 34px rgba(25,31,25,.18);
-  --serif:'Fraunces',Georgia,'Times New Roman',serif;
-  --sans:'Public Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+  --bg:#ffffff; --bg-alt:#f3f4f5; --card:#ffffff; --ink:#1a1c1f; --ink-dim:#5c6066;
+  --line:#dde0e3; --accent:#33465a; --accent-ink:#222f3d; --accent-soft:#eaedf0;
+  --brand:#1a1c1f; --brand-soft:#2c2f33; --brand-ink:#ffffff;
+  --good:#256b4e; --good-soft:#e7f1ec; --bad:#a13b32; --bad-soft:#f7eae8;
+  --focus:#33465a; --radius:3px; --shadow:0 1px 3px rgba(20,22,25,.08);
+  --shadow-lg:0 10px 26px rgba(20,22,25,.14);
+  --serif:'IBM Plex Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+  --sans:'IBM Plex Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
   --mono:'IBM Plex Mono','SFMono-Regular',Consolas,monospace;
 }
 @media (prefers-color-scheme: dark){
   :root:not([data-theme="light"]){
-    --bg:#12160f; --bg-alt:#181c14; --card:#1b2018; --ink:#eee9de; --ink-dim:#9a9c8b;
-    --line:#2c3126; --accent:#d1a44f; --accent-ink:#e8c581; --accent-soft:#2a2114;
-    --brand:#2a5340; --brand-soft:#1c2e24; --brand-ink:#eef3ee;
-    --good:#3fcda9; --good-soft:#0f2e26; --bad:#e2755f; --bad-soft:#33170f;
-    --focus:#d1a44f; --shadow:0 2px 10px rgba(0,0,0,.4); --shadow-lg:0 16px 34px rgba(0,0,0,.55);
+    --bg:#111214; --bg-alt:#191b1e; --card:#1a1c1f; --ink:#eef0f2; --ink-dim:#989ea3;
+    --line:#2c2f33; --accent:#8296ac; --accent-ink:#aab8c8; --accent-soft:#20262c;
+    --brand:#0a0b0c; --brand-soft:#1e2124; --brand-ink:#eef0f2;
+    --good:#4fae8a; --good-soft:#132520; --bad:#d17e73; --bad-soft:#2b1714;
+    --focus:#8296ac; --shadow:0 1px 3px rgba(0,0,0,.4); --shadow-lg:0 10px 26px rgba(0,0,0,.55);
   }
 }
 :root[data-theme="dark"]{
-  --bg:#12160f; --bg-alt:#181c14; --card:#1b2018; --ink:#eee9de; --ink-dim:#9a9c8b;
-  --line:#2c3126; --accent:#d1a44f; --accent-ink:#e8c581; --accent-soft:#2a2114;
-  --brand:#2a5340; --brand-soft:#1c2e24; --brand-ink:#eef3ee;
-  --good:#3fcda9; --good-soft:#0f2e26; --bad:#e2755f; --bad-soft:#33170f;
-  --focus:#d1a44f; --shadow:0 2px 10px rgba(0,0,0,.4); --shadow-lg:0 16px 34px rgba(0,0,0,.55);
+  --bg:#111214; --bg-alt:#191b1e; --card:#1a1c1f; --ink:#eef0f2; --ink-dim:#989ea3;
+  --line:#2c2f33; --accent:#8296ac; --accent-ink:#aab8c8; --accent-soft:#20262c;
+  --brand:#0a0b0c; --brand-soft:#1e2124; --brand-ink:#eef0f2;
+  --good:#4fae8a; --good-soft:#132520; --bad:#d17e73; --bad-soft:#2b1714;
+  --focus:#8296ac; --shadow:0 1px 3px rgba(0,0,0,.4); --shadow-lg:0 10px 26px rgba(0,0,0,.55);
 }
 body{background:var(--bg);color:var(--ink);font-family:var(--sans)}
-h1,h2,h3{font-family:var(--serif);text-wrap:balance}
+h1,h2,h3{font-family:var(--serif);font-weight:600;letter-spacing:-.01em;text-wrap:balance}
 .mono,.card-price,.price-badge,.stat b,#hero-n,#v-multi,#v-verk,.kv-grid .v,.compare-table td,.compare-table th,.calc-out,#rev-out{font-family:var(--mono);font-variant-numeric:tabular-nums}
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
@@ -55,10 +55,9 @@ button{font-family:inherit}
 /* topbar */
 .topbar{position:sticky;top:0;z-index:50;background:var(--brand);border-bottom:1px solid rgba(255,255,255,.08)}
 .topbar-in{display:flex;align-items:center;justify-content:space-between;height:64px}
-.logo{display:flex;align-items:center;gap:9px;font-family:var(--serif);font-weight:600;font-size:20px;color:#fff;text-decoration:none;letter-spacing:0}
-.logo .dot{width:9px;height:9px;border-radius:50%;background:var(--accent)}
+.logo{display:flex;align-items:center;font-family:var(--serif);font-weight:600;font-size:20px;color:#fff;text-decoration:none;letter-spacing:-.01em}
 .nav{display:flex;gap:26px;align-items:center}
-.nav a{color:#c3c9bd;text-decoration:none;font-size:13.5px;font-weight:600;letter-spacing:.01em}
+.nav a{color:#a8acb1;text-decoration:none;font-size:13.5px;font-weight:600;letter-spacing:.01em}
 .nav a:hover{color:#fff}
 .btn{display:inline-flex;align-items:center;gap:6px;border-radius:9px;padding:10px 18px;font-weight:700;font-size:14px;border:1px solid transparent;cursor:pointer;text-decoration:none}
 .btn-primary{background:var(--accent);color:#fff}
@@ -71,17 +70,35 @@ button{font-family:inherit}
 @media (max-width:760px){.nav{display:none}}
 
 /* intro strip — kept deliberately short so the listings sit near the top */
-.intro{padding:26px 0;background:var(--brand);color:var(--brand-ink)}
-.intro-in{display:flex;justify-content:space-between;align-items:center;gap:32px;flex-wrap:wrap}
+.intro{padding:28px 0 32px;background:var(--brand);color:var(--brand-ink)}
+.intro-in{display:flex;flex-direction:column;gap:18px}
 .intro-text{max-width:640px}
-.eyebrow{display:inline-flex;align-items:center;gap:6px;color:#c3c9bd;font-size:11.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;margin-bottom:8px}
-.intro h1{font-size:clamp(19px,2.3vw,25px);font-weight:600;letter-spacing:0;margin:0;color:#fff}
+.eyebrow{display:inline-flex;align-items:center;gap:6px;color:#a8acb1;font-size:11.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;margin-bottom:8px}
+.intro h1{font-size:clamp(19px,2.3vw,25px);font-weight:600;letter-spacing:-.01em;margin:0;color:#fff}
+
+.hero-search{display:flex;gap:10px;flex-wrap:wrap;align-items:end;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.14);padding:14px;border-radius:var(--radius)}
+.hs-field{display:flex;flex-direction:column;gap:5px;flex:1 1 200px;min-width:180px}
+.hs-field label{font-size:10.5px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:#a8acb1}
+.hs-field input,.hs-field select{background:#fff;border:1px solid #c7ccd1;border-radius:var(--radius);padding:10px 12px;font-size:14px;font-family:var(--sans);color:#1a1c1f;height:38px}
+.hs-submit{padding:0 26px;height:38px;white-space:nowrap;flex:0 0 auto}
+
+.intro-bottom{display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap}
+.hero-quick{font-size:12.5px;color:#8b8f94}
+.hero-quick a{color:#d4d6d9;text-decoration:none;font-weight:600;margin-left:6px}
+.hero-quick a:hover{color:#fff;text-decoration:underline}
 .intro-stats{display:flex;gap:30px;flex-wrap:wrap;margin:0}
 .intro-stats > div{display:flex;flex-direction:column-reverse;gap:2px}
-.intro-stats dt{font-size:10.5px;text-transform:uppercase;letter-spacing:.05em;color:#9aa398;font-weight:600}
-.intro-stats dd{margin:0;font-family:var(--mono);font-size:20px;font-weight:600;color:#e3bd75}
-.intro-stats .scan dd{font-size:14px;color:#dfe3d8;font-family:var(--sans);font-weight:600}
-@media (max-width:760px){.intro-stats{gap:20px}}
+.intro-stats dt{font-size:10.5px;text-transform:uppercase;letter-spacing:.05em;color:#8b8f94;font-weight:600}
+.intro-stats dd{margin:0;font-family:var(--mono);font-size:20px;font-weight:600;color:#fff}
+.intro-stats .scan dd{font-size:14px;color:#d4d6d9;font-family:var(--sans);font-weight:600}
+@media (max-width:760px){.intro-stats{gap:20px}.hero-search{flex-direction:column;align-items:stretch}.hs-submit{width:100%}}
+
+/* spotlight */
+.spotlight{padding:36px 0 8px}
+.spotlight-head{display:flex;justify-content:space-between;align-items:baseline;gap:16px;flex-wrap:wrap;margin-bottom:16px}
+.spotlight-head h2{margin:0}
+.spotlight-link{color:var(--accent);text-decoration:none;font-weight:600;font-size:13.5px;white-space:nowrap}
+.spotlight-link:hover{text-decoration:underline}
 
 /* ticker, now tucked into the filter sidebar */
 .ticker-block{margin-top:18px;padding-top:16px;border-top:1px solid var(--line)}
@@ -129,9 +146,9 @@ button{font-family:inherit}
 .card:hover{box-shadow:var(--shadow-lg);transform:translateY(-2px)}
 .card-photo{position:relative;aspect-ratio:4/3;background:var(--bg-alt);overflow:hidden}
 .card-photo img{width:100%;height:100%;object-fit:cover;display:block}
-.card-photo .fallback{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:34px}
-.src-badge{position:absolute;top:10px;right:10px;font-size:10.5px;font-weight:700;background:rgba(11,21,36,.6);color:#fff;padding:4px 9px;border-radius:999px}
-.price-badge{position:absolute;left:10px;bottom:10px;font-size:15px;font-weight:800;background:rgba(11,21,36,.85);color:#fff;padding:6px 11px;border-radius:8px;max-width:calc(100% - 20px)}
+.card-photo .fallback{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:11.5px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:#9a9ea3;background:var(--bg-alt)}
+.src-badge{position:absolute;top:10px;right:10px;font-size:10.5px;font-weight:600;background:rgba(255,255,255,.92);color:var(--ink);padding:4px 9px;border:1px solid var(--line);letter-spacing:.02em}
+.price-badge{position:absolute;left:10px;bottom:10px;font-size:15px;font-weight:600;background:rgba(20,22,25,.88);color:#fff;padding:6px 11px;max-width:calc(100% - 20px)}
 .price-badge .was{font-size:11px;font-weight:500;text-decoration:line-through;opacity:.75;margin-right:5px}
 .price-badge.onbekend{font-weight:700;font-size:13px;background:rgba(11,21,36,.7)}
 .card-body{padding:14px 16px;display:flex;flex-direction:column;gap:8px;flex:1}
@@ -168,14 +185,14 @@ button{font-family:inherit}
 @media (max-width:860px){.insight-grid{grid-template-columns:1fr}}
 .bar-row{display:grid;grid-template-columns:110px 1fr 40px;align-items:center;gap:10px;margin-bottom:8px;font-size:13px}
 .bar-track{background:var(--bg-alt);border-radius:6px;height:12px;overflow:hidden}
-.bar-fill{height:100%;background:linear-gradient(90deg,var(--brand),var(--accent))}
+.bar-fill{height:100%;background:var(--accent)}
 .usp-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:16px}
 .usp-list li{display:flex;gap:14px;font-size:14px;padding-left:16px;border-left:2px solid var(--accent)}
 .usp-list b{font-family:var(--serif);font-weight:600;font-size:15px}
 
 /* alert cta */
 .cta{padding:56px 0;border-top:1px solid var(--line)}
-.cta-box{background:linear-gradient(135deg,#0e2018,var(--brand));color:#fff;border-radius:16px;padding:44px;text-align:center}
+.cta-box{background:var(--brand);color:#fff;border-radius:var(--radius);padding:44px;text-align:center}
 .cta-box h2{font-size:26px}
 .cta-box p{color:#aeb8c9;max-width:52ch;margin:0 auto 22px}
 .cta-form{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;max-width:440px;margin:0 auto}
@@ -223,7 +240,7 @@ textarea.note{width:100%;border:1px solid var(--line);border-radius:8px;padding:
 
 <header class="topbar">
   <div class="wrap topbar-in">
-    <a href="#top" class="logo"><span class="dot"></span>HorecaMatch</a>
+    <a href="#top" class="logo">HorecaMatch</a>
     <nav class="nav" aria-label="Hoofdmenu">
       <a href="#market">Aanbod</a>
       <a href="#verkocht">Verkocht</a>
@@ -239,14 +256,40 @@ textarea.note{width:100%;border:1px solid var(--line);border-radius:8px;padding:
     <div class="wrap intro-in">
       <div class="intro-text">
         <span class="eyebrow">Eén markt, alle bronnen</span>
-        <h1>Het horeca-aanbod van Nederland — samengevoegd, ontdubbeld, elke dag actueel.</h1>
+        <h1>Horeca-aanbod van Nederland, dagelijks actueel.</h1>
       </div>
-      <dl class="intro-stats">
-        <div><dt>Te koop</dt><dd id="hero-n">–</dd></div>
-        <div><dt>Multi-source</dt><dd id="v-multi">–</dd></div>
-        <div><dt>Verkocht gesignaleerd</dt><dd id="v-verk">–</dd></div>
-        <div class="scan"><dt>Laatste marktscan</dt><dd id="scanline">–</dd></div>
-      </dl>
+
+      <form class="hero-search" id="hero-search">
+        <div class="hs-field">
+          <label for="hero-plaats">Plaats of provincie</label>
+          <input type="text" id="hero-plaats" list="plaatsen-list" placeholder="Bijv. Rotterdam">
+        </div>
+        <div class="hs-field">
+          <label for="hero-cat">Categorie</label>
+          <select id="hero-cat"><option value="">Alle categorieën</option></select>
+        </div>
+        <button class="btn btn-primary hs-submit" type="submit">Zoeken</button>
+      </form>
+
+      <div class="intro-bottom">
+        <div class="hero-quick">Populair:<a href="#" data-plaats="Amsterdam">Amsterdam</a><a href="#" data-plaats="Rotterdam">Rotterdam</a><a href="#" data-plaats="Utrecht">Utrecht</a><a href="#" data-plaats="Noord-Brabant">Noord-Brabant</a></div>
+        <dl class="intro-stats">
+          <div><dt>Te koop</dt><dd id="hero-n">–</dd></div>
+          <div><dt>Multi-source</dt><dd id="v-multi">–</dd></div>
+          <div><dt>Verkocht gesignaleerd</dt><dd id="v-verk">–</dd></div>
+          <div class="scan"><dt>Laatste marktscan</dt><dd id="scanline">–</dd></div>
+        </dl>
+      </div>
+    </div>
+  </section>
+
+  <section class="spotlight" id="spotlight">
+    <div class="wrap">
+      <div class="spotlight-head">
+        <h2>In de spotlight</h2>
+        <a href="#market" class="spotlight-link">Bekijk al het aanbod →</a>
+      </div>
+      <div class="grid" id="spotlight-grid"></div>
     </div>
   </section>
 
@@ -607,9 +650,7 @@ function card(x, id){
     photoDiv.innerHTML = "";
     var fb = document.createElement("div");
     fb.className = "fallback";
-    fb.style.background = icon[1];
-    fb.style.color = "#fff";
-    fb.textContent = icon[0];
+    fb.textContent = CATLABEL[x.cat] || "Horeca";
     photoDiv.appendChild(fb);
     addOverlays();
   }
@@ -651,6 +692,27 @@ function card(x, id){
   return el;
 }
 
+function wireCards(container){
+  container.querySelectorAll(".cmp-check").forEach(function(cb){
+    cb.addEventListener("change", function(){
+      var id = parseInt(cb.getAttribute("data-id"),10);
+      if(cb.checked) compareSet.add(id); else compareSet.delete(id);
+      updateCompareBar();
+    });
+  });
+  container.querySelectorAll(".note-btn").forEach(function(btn){
+    btn.addEventListener("click", function(){
+      openModal(parseInt(btn.getAttribute("data-id"),10));
+    });
+  });
+  container.querySelectorAll("[data-open]").forEach(function(a){
+    a.addEventListener("click", function(ev){
+      ev.preventDefault();
+      openModal(parseInt(a.getAttribute("data-open"),10));
+    });
+  });
+}
+
 function renderGrid(){
   var list = filtered();
   window.__filtered = list;
@@ -665,24 +727,7 @@ function renderGrid(){
   document.getElementById("load-more").style.display = list.length > SHOWN ? "block":"none";
   document.getElementById("result-count").textContent = list.length + " zaken gevonden";
 
-  grid.querySelectorAll(".cmp-check").forEach(function(cb){
-    cb.addEventListener("change", function(){
-      var id = parseInt(cb.getAttribute("data-id"),10);
-      if(cb.checked) compareSet.add(id); else compareSet.delete(id);
-      updateCompareBar();
-    });
-  });
-  grid.querySelectorAll(".note-btn").forEach(function(btn){
-    btn.addEventListener("click", function(){
-      openModal(parseInt(btn.getAttribute("data-id"),10));
-    });
-  });
-  grid.querySelectorAll("[data-open]").forEach(function(a){
-    a.addEventListener("click", function(ev){
-      ev.preventDefault();
-      openModal(parseInt(a.getAttribute("data-open"),10));
-    });
-  });
+  wireCards(grid);
 }
 
 function updateCompareBar(){
@@ -811,6 +856,27 @@ document.getElementById("reset-filters").addEventListener("click", function(){
   renderAll();
 });
 
+/* ---------------- hero search ---------------- */
+function goToMarket(plaats, cat){
+  selCat.clear();
+  if(cat){ selCat.add(cat); }
+  document.getElementById("plaats-input").value = plaats || "";
+  SHOWN = 24;
+  renderAll();
+  document.getElementById("market").scrollIntoView({behavior:"smooth", block:"start"});
+}
+document.getElementById("hero-search").addEventListener("submit", function(ev){
+  ev.preventDefault();
+  goToMarket(document.getElementById("hero-plaats").value.trim(), document.getElementById("hero-cat").value);
+});
+document.querySelectorAll(".hero-quick a").forEach(function(a){
+  a.addEventListener("click", function(ev){
+    ev.preventDefault();
+    document.getElementById("hero-plaats").value = a.getAttribute("data-plaats");
+    goToMarket(a.getAttribute("data-plaats"), "");
+  });
+});
+
 /* ---------------- static sections ---------------- */
 function initTicker(){
   var recent = L.filter(function(x){ return x.geplaatst; })
@@ -832,9 +898,8 @@ function initSold(){
     return;
   }
   grid.innerHTML = SOLD.map(function(x){
-    var icon = ICON[x.cat] || ICON.overig;
     return '<div class="sold-card"><span class="tag">Verkocht · ' + (x.doorlooptijd_dagen!=null? x.doorlooptijd_dagen + " dagen" : "onbekend") + '</span>' +
-      "<h4>" + icon[0] + " " + esc(x.titel||"") + "</h4>" +
+      "<h4>" + esc(x.titel||"") + "</h4>" +
       "<p>" + esc(x.plaats||"") + "</p></div>";
   }).join("");
 }
@@ -883,11 +948,37 @@ function initDynamic(){
 
   var dl = document.getElementById("plaatsen-list");
   dl.innerHTML = PLAATSEN.map(function(p){ return '<option value="' + esc(p) + '">'; }).join("");
+
+  var heroCat = document.getElementById("hero-cat");
+  CATORDER.forEach(function(cat){
+    var opt = document.createElement("option");
+    opt.value = cat;
+    opt.textContent = CATLABEL[cat];
+    heroCat.appendChild(opt);
+  });
+}
+
+function initSpotlight(){
+  var box = document.getElementById("spotlight-grid");
+  if(!box) return;
+  var withPhoto = L.filter(function(x){ return x.afbeelding; });
+  var pool = withPhoto.length >= 3 ? withPhoto : L;
+  var picks = pool.slice().sort(function(a,b){
+    var sa = (a.bench!=null ? a.bench : 0) - (a.oud ? 25 : 0);
+    var sb = (b.bench!=null ? b.bench : 0) - (b.oud ? 25 : 0);
+    return sa - sb;
+  }).slice(0,3);
+  box.innerHTML = "";
+  picks.forEach(function(x){
+    box.appendChild(card(x, L.indexOf(x)));
+  });
+  wireCards(box);
 }
 
 initDynamic();
 initTicker();
 initSold();
+initSpotlight();
 initProvBars();
 initFaq();
 renderAll();
