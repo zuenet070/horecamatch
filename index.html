@@ -5,6 +5,25 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>HorecaMatch — heel het horeca-aanbod van Nederland, elke dag actueel</title>
 <meta name="description" content="HorecaMatch verzamelt horecabedrijven te koop van meerdere aanbodsites, ontdubbelt ze, en signaleert prijsdalingen en verkopen die andere sites niet laten zien.">
+<link rel="canonical" href="https://zuenet070.github.io/horecamatch/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="HorecaMatch">
+<meta property="og:title" content="HorecaMatch — heel het horeca-aanbod van Nederland, elke dag actueel">
+<meta property="og:description" content="Meerdere horeca-aanbodsites samengevoegd, ontdubbeld en dagelijks bijgewerkt — inclusief prijsdalingen en verkocht-detectie die andere sites niet tonen.">
+<meta property="og:url" content="https://zuenet070.github.io/horecamatch/">
+<meta property="og:locale" content="nl_NL">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="HorecaMatch — heel het horeca-aanbod van Nederland, elke dag actueel">
+<meta name="twitter:description" content="Meerdere horeca-aanbodsites samengevoegd, ontdubbeld en dagelijks bijgewerkt.">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "HorecaMatch",
+  "url": "https://zuenet070.github.io/horecamatch/",
+  "description": "Overzicht van horecabedrijven te koop in Nederland, samengevoegd uit meerdere aanbodsites."
+}
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
@@ -66,8 +85,14 @@ button{font-family:inherit}
 .btn-ghost:hover{background:var(--bg-alt)}
 .topbar .btn-ghost{border-color:rgba(255,255,255,.25);color:#fff}
 .topbar .btn-ghost:hover{background:rgba(255,255,255,.08)}
-.nav-mobile{display:none}
-@media (max-width:760px){.nav{display:none}}
+.topbar-actions{display:flex;align-items:center;gap:10px}
+.nav-toggle{display:none;flex-direction:column;justify-content:center;align-items:center;gap:4px;width:36px;height:36px;background:transparent;border:1px solid rgba(255,255,255,.25);border-radius:var(--radius);cursor:pointer;padding:0;flex:0 0 auto}
+.nav-toggle span{display:block;width:16px;height:2px;background:#fff}
+.nav-mobile{display:none;flex-direction:column;border-top:1px solid rgba(255,255,255,.08)}
+.nav-mobile.open{display:flex}
+.nav-mobile a{color:#c7ccd1;text-decoration:none;font-size:14.5px;font-weight:600;padding:13px 4px;border-bottom:1px dashed rgba(255,255,255,.12)}
+.nav-mobile a:last-child{border-bottom:none}
+@media (max-width:760px){.nav{display:none}.nav-toggle{display:flex}}
 
 /* intro strip — kept deliberately short so the listings sit near the top */
 .intro{padding:28px 0 32px;background:var(--brand);color:var(--brand-ink)}
@@ -75,6 +100,7 @@ button{font-family:inherit}
 .intro-text{max-width:640px}
 .eyebrow{display:inline-flex;align-items:center;gap:6px;color:#a8acb1;font-size:11.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;margin-bottom:8px}
 .intro h1{font-size:clamp(19px,2.3vw,25px);font-weight:600;letter-spacing:-.01em;margin:0;color:#fff}
+.intro-sub{font-size:14.5px;line-height:1.55;color:#c3c6ca;margin:8px 0 0;max-width:560px}
 
 .hero-search{display:flex;gap:10px;flex-wrap:wrap;align-items:end;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.14);padding:14px;border-radius:var(--radius)}
 .hs-field{display:flex;flex-direction:column;gap:5px;flex:1 1 200px;min-width:180px}
@@ -91,7 +117,7 @@ button{font-family:inherit}
 .intro-stats dt{font-size:10.5px;text-transform:uppercase;letter-spacing:.05em;color:#8b8f94;font-weight:600}
 .intro-stats dd{margin:0;font-family:var(--mono);font-size:20px;font-weight:600;color:#fff}
 .intro-stats .scan dd{font-size:14px;color:#d4d6d9;font-family:var(--sans);font-weight:600}
-@media (max-width:760px){.intro-stats{gap:20px}.hero-search{flex-direction:column;align-items:stretch}.hs-submit{width:100%}}
+@media (max-width:760px){.intro-stats{gap:20px}.hero-search{flex-direction:column;align-items:stretch}.hs-field{flex:0 0 auto;min-width:0}.hs-submit{width:100%}}
 
 /* spotlight */
 .spotlight{padding:36px 0 8px}
@@ -245,9 +271,24 @@ textarea.note{width:100%;border:1px solid var(--line);border-radius:8px;padding:
       <a href="#market">Aanbod</a>
       <a href="#verkocht">Verkocht</a>
       <a href="#insight">Marktinzicht</a>
+      <a href="#over">Over ons</a>
       <a href="#faq">Vragen</a>
     </nav>
-    <a href="#cta" class="btn btn-primary">Ontvang alerts</a>
+    <div class="topbar-actions">
+      <a href="#cta" class="btn btn-primary">Ontvang alerts</a>
+      <button class="nav-toggle" id="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-mobile" aria-label="Menu openen">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+  <div class="wrap">
+    <nav class="nav-mobile" id="nav-mobile" aria-label="Mobiel menu">
+      <a href="#market">Aanbod</a>
+      <a href="#verkocht">Verkocht</a>
+      <a href="#insight">Marktinzicht</a>
+      <a href="#over">Over ons</a>
+      <a href="#faq">Vragen</a>
+    </nav>
   </div>
 </header>
 
@@ -256,7 +297,8 @@ textarea.note{width:100%;border:1px solid var(--line);border-radius:8px;padding:
     <div class="wrap intro-in">
       <div class="intro-text">
         <span class="eyebrow">Eén markt, alle bronnen</span>
-        <h1>Horeca-aanbod van Nederland, dagelijks actueel.</h1>
+        <h1>Elk horecapand te koop in Nederland — van alle makelaars, op één plek.</h1>
+        <p class="intro-sub">HorecaMatch verzamelt dagelijks het aanbod van de grote horecamakelaars, herkent wanneer dezelfde zaak op meerdere sites staat en signaleert prijsdalingen die je zelf snel mist.</p>
       </div>
 
       <form class="hero-search" id="hero-search">
@@ -397,16 +439,29 @@ textarea.note{width:100%;border:1px solid var(--line);border-radius:8px;padding:
     </div>
   </section>
 
+  <section class="insight" id="over" style="border-top:1px solid var(--line)">
+    <div class="wrap insight-grid">
+      <div>
+        <h2>Over HorecaMatch</h2>
+        <p style="color:var(--ink-dim);max-width:60ch">HorecaMatch is een onafhankelijk overzicht van horecabedrijven te koop in Nederland. We bouwen geen eigen aanbod op — we verzamelen wat al openbaar op meerdere aanbodsites staat, ontdubbelen dat tot één lijst, en volgen elke zaak over tijd bij zodat prijsdalingen en verkopen zichtbaar worden. Voor het kopen of aanmelden van een zaak verwijzen we altijd door naar de oorspronkelijke bron.</p>
+      </div>
+      <div>
+        <h3 style="font-size:16px;margin:0 0 10px">Contact</h3>
+        <p style="color:var(--ink-dim);max-width:56ch;margin:0">Vraag, correctie, of wil je als horecamakelaar je aanbod hier laten meelopen? Mail naar <a href="mailto:info@horecamatch.nl" style="color:var(--accent);font-weight:600">info@horecamatch.nl</a>.</p>
+      </div>
+    </div>
+  </section>
+
   <section class="cta" id="cta">
     <div class="wrap">
       <div class="cta-box">
         <h2>Mis geen nieuwe zaak meer</h2>
         <p>Stel je zoekprofiel in en ontvang een melding zodra er iets nieuws bijkomt dat past — of de vraagprijs van een zaak die je volgt, zakt.</p>
-        <form class="cta-form" onsubmit="return false" aria-label="Alert aanmelden">
-          <input type="email" placeholder="jouw@email.nl" aria-label="E-mailadres">
-          <button class="btn btn-primary" type="button" disabled title="Binnenkort beschikbaar">Meld me aan</button>
+        <form class="cta-form" id="cta-form" aria-label="Alert aanmelden">
+          <input type="email" id="cta-email" placeholder="jouw@email.nl" aria-label="E-mailadres" required>
+          <button class="btn btn-primary" type="submit">Meld me aan</button>
         </form>
-        <p class="cta-note">Alert-aanmelding via de site komt binnenkort — neem tot die tijd contact op voor een handmatig ingesteld profiel.</p>
+        <p class="cta-note">Automatische aanmelding via de site komt binnenkort. Nu al: klik "Meld me aan" en we stellen je zoekprofiel handmatig in — of mail direct naar <a href="mailto:info@horecamatch.nl" style="color:inherit">info@horecamatch.nl</a>.</p>
       </div>
     </div>
   </section>
@@ -423,6 +478,7 @@ textarea.note{width:100%;border:1px solid var(--line);border-radius:8px;padding:
   <div class="wrap foot-grid">
     <div>© <span id="foot-year"></span> HorecaMatch — laatste marktscan: <span id="foot-snap">–</span></div>
     <div>Data afkomstig van openbare aanbodsites, uitsluitend zaken waar dataverzameling is toegestaan.</div>
+    <div><a href="#over" style="color:inherit">Over ons</a> · <a href="mailto:info@horecamatch.nl" style="color:inherit">info@horecamatch.nl</a></div>
   </div>
 </footer>
 
@@ -471,6 +527,7 @@ var PLAATSEN = __DATA.plaatsen || [];
 var STATS = __DATA.stats || {};
 
 var CATLABEL = {restaurant:"Restaurant", cafe:"Café / bar", cafetaria:"Cafetaria / snackbar", lunchroom:"Lunchroom / bakkerij", afhaal:"Afhaal / bezorg", hotel:"Hotel / B&B", overig:"Overig"};
+var MARGIN = {restaurant:0.07, cafe:0.09, cafetaria:0.11, lunchroom:0.08, afhaal:0.09, hotel:0.12, overig:0.08};
 var CATORDER = ["restaurant","cafe","cafetaria","lunchroom","afhaal","hotel","overig"];
 var ICON = {
   restaurant:["🍽️","#7c3f2c"],
@@ -494,6 +551,20 @@ var selCat = new Set();
 var selProv = new Set();
 var compareSet = new Set();
 var notes = {};
+try {
+  var __savedNotes = JSON.parse(localStorage.getItem("hm_notes") || "{}");
+  if(__savedNotes && typeof __savedNotes === "object") notes = __savedNotes;
+} catch(e){}
+try {
+  var __savedCompare = JSON.parse(localStorage.getItem("hm_compare") || "[]");
+  if(Array.isArray(__savedCompare)) compareSet = new Set(__savedCompare.filter(function(id){ return L[id]; }));
+} catch(e){}
+function saveNotes(){
+  try { localStorage.setItem("hm_notes", JSON.stringify(notes)); } catch(e){}
+}
+function saveCompare(){
+  try { localStorage.setItem("hm_compare", JSON.stringify(Array.from(compareSet))); } catch(e){}
+}
 
 function state(){
   return {
@@ -697,6 +768,7 @@ function wireCards(container){
     cb.addEventListener("change", function(){
       var id = parseInt(cb.getAttribute("data-id"),10);
       if(cb.checked) compareSet.add(id); else compareSet.delete(id);
+      saveCompare();
       updateCompareBar();
     });
   });
@@ -760,11 +832,12 @@ function openModal(id){
     '<p><a href="' + esc(x.url) + '" target="_blank" rel="noopener">Bekijk origineel aanbod op ' + esc(x.bron) + ' →</a></p>';
 
   if(x.prijs){
+    var margePct = MARGIN[x.cat] || MARGIN.overig;
     body += '<div class="calc-box"><h4>Snelle terugverdien-indicatie</h4>' +
       '<label for="rev-slider">Geschatte jaaromzet: <b id="rev-out"></b></label>' +
       '<input type="range" id="rev-slider" min="50000" max="1000000" step="10000" value="' + Math.max(150000, Math.round((x.prijs*2)/10000)*10000) + '">' +
       '<div class="calc-out" id="calc-out"></div>' +
-      '<small>Uitgangspunt: 8% van de omzet als indicatieve winstmarge beschikbaar voor terugverdienen. Alleen een ruwe indicatie, geen financieel advies.</small></div>';
+      '<small>Uitgangspunt: ' + Math.round(margePct*100) + '% van de omzet als indicatieve winstmarge voor deze categorie (' + esc(CATLABEL[x.cat]||"horeca") + '), beschikbaar voor terugverdienen. Branchegemiddelde per type, ruwe indicatie — geen financieel advies.</small></div>';
   }
 
   body += '<div><h4 style="font-size:13px;text-transform:uppercase;color:var(--ink-dim);margin:18px 0 4px">Jouw notitie (lokaal, alleen zichtbaar voor jou)</h4>' +
@@ -777,7 +850,7 @@ function openModal(id){
     function calcUpdate(){
       var rev = parseInt(slider.value,10);
       document.getElementById("rev-out").textContent = fmtEUR(rev);
-      var marge = rev*0.08;
+      var marge = rev*margePct;
       var jaren = marge>0 ? (x.prijs/marge) : null;
       document.getElementById("calc-out").innerHTML = jaren
         ? "≈ " + jaren.toFixed(1) + " jaar <small>terugverdientijd bij deze omzet</small>"
@@ -791,6 +864,7 @@ function openModal(id){
   noteArea.addEventListener("change", function(){
     if(noteArea.value.trim()) notes[id] = noteArea.value.trim();
     else delete notes[id];
+    saveNotes();
     renderGrid();
   });
 
@@ -865,6 +939,37 @@ function goToMarket(plaats, cat){
   renderAll();
   document.getElementById("market").scrollIntoView({behavior:"smooth", block:"start"});
 }
+/* ---------------- mobiel menu ---------------- */
+(function(){
+  var toggle = document.getElementById("nav-toggle");
+  var menu = document.getElementById("nav-mobile");
+  if(!toggle || !menu) return;
+  function closeMenu(){
+    menu.classList.remove("open");
+    toggle.setAttribute("aria-expanded", "false");
+  }
+  toggle.addEventListener("click", function(){
+    var open = menu.classList.toggle("open");
+    toggle.setAttribute("aria-expanded", open ? "true" : "false");
+  });
+  menu.querySelectorAll("a").forEach(function(a){
+    a.addEventListener("click", closeMenu);
+  });
+})();
+
+/* ---------------- alert-aanmelding (mailto, geen backend) ---------------- */
+var ctaForm = document.getElementById("cta-form");
+if(ctaForm){
+  ctaForm.addEventListener("submit", function(ev){
+    ev.preventDefault();
+    var email = document.getElementById("cta-email").value.trim();
+    if(!email) return;
+    var subject = "Aanmelding voor horeca-alerts";
+    var body = "Meld dit e-mailadres aan voor meldingen bij nieuw aanbod en prijsdalingen: " + email;
+    window.location.href = "mailto:info@horecamatch.nl?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(body);
+  });
+}
+
 document.getElementById("hero-search").addEventListener("submit", function(ev){
   ev.preventDefault();
   goToMarket(document.getElementById("hero-plaats").value.trim(), document.getElementById("hero-cat").value);
@@ -921,10 +1026,10 @@ function initFaq(){
     ["Hoe vaak wordt de site bijgewerkt?", "Elke ochtend automatisch. Nieuw aanbod, prijswijzigingen en verkopen worden dan verwerkt."],
     ["Hoe werkt de verkocht-detectie?", "Als een zaak niet meer in het aanbod van een bron voorkomt terwijl die bron zelf wel succesvol is gescand, markeren we hem als vermoedelijk verkocht en berekenen we hoeveel dagen hij te koop stond."],
     ["Wat betekent 'onderhandelingsruimte'?", "Een inschatting op basis van hoe lang een zaak al te koop staat en of de vraagprijs al eens is verlaagd. Geen garantie, wel een handig startpunt voor een gesprek."],
-    ["Kan ik ook een melding per mail krijgen?", "Dat komt eraan. Neem tot die tijd contact op om een zoekprofiel handmatig te laten instellen."]
+    ["Kan ik ook een melding per mail krijgen?", 'Automatische aanmelding via de site komt eraan. Vul tot die tijd je e-mailadres in bij "Ontvang alerts" bovenaan, of mail naar <a href="mailto:info@horecamatch.nl" style="color:inherit">info@horecamatch.nl</a> om een zoekprofiel handmatig te laten instellen.']
   ];
   document.getElementById("faq-list").innerHTML = items.map(function(it,i){
-    return '<div class="faq-item" data-idx="' + i + '"><button class="faq-q" aria-expanded="false">' + esc(it[0]) + '<span class="chevron" aria-hidden="true">▾</span></button><div class="faq-a">' + esc(it[1]) + "</div></div>";
+    return '<div class="faq-item" data-idx="' + i + '"><button class="faq-q" aria-expanded="false">' + esc(it[0]) + '<span class="chevron" aria-hidden="true">▾</span></button><div class="faq-a">' + it[1] + "</div></div>";
   }).join("");
   document.querySelectorAll(".faq-item").forEach(function(item){
     var btn = item.querySelector(".faq-q");
@@ -982,6 +1087,11 @@ initSpotlight();
 initProvBars();
 initFaq();
 renderAll();
+
+(function initHashOpen(){
+  var m = /^#open=(\d+)$/.exec(location.hash);
+  if(m) openModal(parseInt(m[1],10));
+})();
 
 })();
 </script>
