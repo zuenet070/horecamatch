@@ -49,7 +49,8 @@
 }
 body{background:var(--bg);color:var(--ink);font-family:var(--sans)}
 h1,h2,h3{font-family:var(--serif);font-weight:600;letter-spacing:-.01em;text-wrap:balance}
-.mono,.card-price,.price-badge,.stat b,#hero-n,#v-multi,#v-verk,.kv-grid .v,.compare-table td,.compare-table th,.calc-out,#rev-out{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.mono,.stat b,#hero-n,#v-multi,#v-verk,.compare-table td,.compare-table th,.calc-out,#rev-out{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.kv-grid .v{font-variant-numeric:tabular-nums}
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
 [id]{scroll-margin-top:76px}
@@ -141,6 +142,7 @@ button{font-family:inherit}
 .filters-toggle[aria-expanded="true"]{background:var(--accent);border-color:var(--accent);color:#fff}
 .filters-n{display:inline-flex;align-items:center;justify-content:center;min-width:18px;height:18px;padding:0 5px;border-radius:999px;background:var(--accent);color:#fff;font-size:11px;font-weight:800}
 .filters-toggle[aria-expanded="true"] .filters-n{background:#fff;color:var(--accent)}
+.filters-n[hidden]{display:none}
 .filters-apply{display:none}
 @media (max-width:900px){
   .filters{display:none}
@@ -171,32 +173,43 @@ button{font-family:inherit}
 
 .toolbar{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:16px;flex-wrap:wrap}
 .toolbar select{border:1px solid var(--line);border-radius:8px;padding:8px 10px;font-size:13px;background:var(--card)}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:16px}
-.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;display:flex;flex-direction:column;box-shadow:var(--shadow);transition:box-shadow .15s,transform .15s}
-.card:hover{box-shadow:var(--shadow-lg);transform:translateY(-2px)}
-.card-photo{position:relative;aspect-ratio:4/3;background:var(--bg-alt);overflow:hidden}
+.grid{display:grid;grid-template-columns:1fr;gap:14px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;display:grid;grid-template-columns:1fr;box-shadow:var(--shadow);transition:box-shadow .15s}
+.card:hover{box-shadow:var(--shadow-lg)}
+.card-photo{position:relative;aspect-ratio:16/10;background:var(--bg-alt);overflow:hidden}
 .card-photo img{width:100%;height:100%;object-fit:cover;display:block}
-.card-photo .fallback{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:11.5px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:#9b9282;background:var(--bg-alt)}
-.src-badge{position:absolute;top:10px;right:10px;font-size:10.5px;font-weight:600;background:rgba(255,255,255,.94);color:#1d1a15;padding:4px 9px;border:1px solid rgba(24,19,13,.12);letter-spacing:.02em}
-.price-badge{position:absolute;left:0;bottom:13px;font-size:15px;font-weight:600;background:rgba(24,19,13,.92);color:#fff;padding:7px 14px 7px 21px;max-width:calc(100% - 14px);clip-path:polygon(13px 0,100% 0,100% 100%,13px 100%,0 50%);box-shadow:0 2px 6px rgba(24,19,13,.3)}
-.was{font-size:11px;font-weight:500;text-decoration:line-through;opacity:.75;margin-right:6px}
-.price-badge .was{font-size:11px}
-.price-badge.onbekend{font-weight:700;font-size:13px;background:rgba(24,19,13,.78)}
-.card-body{padding:14px 16px;display:flex;flex-direction:column;gap:8px;flex:1}
-.card-title{font-size:15px;font-weight:700;margin:0;text-decoration:none;color:var(--ink)}
+.card-photo .fallback{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;color:#9b9282;background:var(--bg-alt)}
+.src-badge{position:absolute;top:10px;left:10px;font-size:10.5px;font-weight:600;background:rgba(255,255,255,.94);color:#1d1a15;padding:4px 9px;border-radius:4px;border:1px solid rgba(24,19,13,.12)}
+.card-body{padding:14px 16px;display:flex;flex-direction:column;gap:6px;min-width:0}
+.card-title{font-size:16px;font-weight:700;margin:0;text-decoration:none;color:var(--ink);line-height:1.3;display:block}
 .card-title:hover{text-decoration:underline}
-.card-loc{font-size:12.5px;color:var(--ink-dim)}
-.badge-row{display:flex;flex-wrap:wrap;gap:6px;margin-top:2px}
+.card-loc{font-size:13px;color:var(--ink-dim)}
+.card-price-row{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin-top:4px}
+.card-price{font-size:19px;font-weight:800;color:var(--ink);font-variant-numeric:tabular-nums;letter-spacing:-.01em}
+.card-price.soft{font-size:15px;font-weight:600;color:var(--ink-dim)}
+.was{font-size:13px;font-weight:500;color:var(--ink-dim);text-decoration:line-through;font-variant-numeric:tabular-nums}
+.card-facts{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:13px;color:var(--ink);margin-top:2px}
+.card-facts span{display:inline-flex;align-items:center;gap:6px;white-space:nowrap}
+.card-facts svg{width:15px;height:15px;color:var(--ink-dim);flex:0 0 auto}
+.badge-row{display:flex;flex-wrap:wrap;gap:6px}
 .badge{font-size:11px;font-weight:700;padding:3px 8px;border-radius:999px;display:inline-flex;align-items:center;gap:4px}
 .badge-bench-under{background:var(--good-soft);color:var(--good)}
 .badge-bench-over{background:var(--bad-soft);color:var(--bad)}
 .badge-drop{background:var(--good-soft);color:var(--good)}
 .badge-multi{background:var(--accent-soft);color:var(--accent-ink)}
 .badge-days{background:var(--bg-alt);color:var(--ink-dim)}
-.card-actions{display:flex;justify-content:space-between;align-items:center;margin-top:auto;padding-top:8px;border-top:1px solid var(--line)}
-.card-actions label{font-size:12px;color:var(--ink-dim);display:flex;align-items:center;gap:5px;cursor:pointer}
-.icon-btn{background:none;border:none;cursor:pointer;font-size:15px;padding:4px;border-radius:6px}
-.icon-btn:hover{background:var(--bg-alt)}
+.card-actions{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:auto;padding-top:10px;border-top:1px solid var(--line);font-size:12.5px;color:var(--ink-dim)}
+.card-actions label{display:inline-flex;align-items:center;gap:6px;cursor:pointer;color:var(--ink-dim)}
+.card-actions .acts{display:inline-flex;align-items:center;gap:12px}
+.icon-btn{background:none;border:none;cursor:pointer;padding:4px;border-radius:6px;color:var(--ink-dim);display:inline-flex;align-items:center;gap:5px;font:inherit;font-size:12.5px}
+.icon-btn svg{width:15px;height:15px}
+.icon-btn:hover{background:var(--bg-alt);color:var(--ink)}
+.icon-btn.has-note{color:var(--accent-ink)}
+@media (min-width:900px){
+  .card{grid-template-columns:260px 1fr}
+  .card-photo{aspect-ratio:auto;height:100%;min-height:190px}
+  .card-body{padding:16px 20px}
+}
 .empty-state{text-align:center;padding:60px 20px;color:var(--ink-dim)}
 .load-more{display:block;margin:24px auto 0;padding:10px 22px;border-radius:10px;border:1px solid var(--line);background:var(--card);cursor:pointer;font-weight:700}
 
@@ -222,7 +235,8 @@ button{font-family:inherit}
 
 /* faq */
 .faq{padding:48px 0;border-top:1px solid var(--line)}
-.faq h2{text-align:center;font-size:26px;margin-bottom:24px}
+.faq h2{font-size:26px;margin-bottom:12px}
+.chevron svg{width:16px;height:16px;display:block}
 .faq-item{border-bottom:1px solid var(--line)}
 .faq-q{width:100%;text-align:left;background:none;border:none;padding:16px 0;font-size:15px;font-weight:700;cursor:pointer;display:flex;justify-content:space-between;align-items:center;color:var(--ink)}
 .faq-a{padding:0 0 16px;color:var(--ink-dim);font-size:14px;display:none;max-width:70ch}
@@ -721,15 +735,31 @@ function renderChips(){
 
 function badgesFor(x){
   var b = [];
-  if(x.oud) b.push('<span class="badge badge-drop">↓ prijs verlaagd</span>');
-  if(x.extra_src && x.extra_src.length) b.push('<span class="badge badge-multi">geverifieerd op ' + (1+x.extra_src.length) + ' sites</span>');
-  if(x.dagen!=null) b.push('<span class="badge badge-days">' + x.dagen + ' dagen op de markt</span>');
+  if(x.oud) b.push('<span class="badge badge-drop">Prijs verlaagd</span>');
+  if(x.extra_src && x.extra_src.length) b.push('<span class="badge badge-multi">Op ' + (1+x.extra_src.length) + ' sites</span>');
   return b.join("");
+}
+
+var SVG = {
+  seat: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 11V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v6"/><path d="M4 11h16v4a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z"/><path d="M6 17v3M18 17v3"/></svg>',
+  days: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>',
+  rent: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11 12 4l9 7"/><path d="M5 10v10h14V10"/><path d="M10 20v-6h4v6"/></svg>',
+  pin: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>',
+  note: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h12l4 4v12H4z"/><path d="M8 12h8M8 16h5"/></svg>'
+};
+
+function factsFor(x){
+  var f = [];
+  if(x.zitplaatsen) f.push('<span>' + SVG.seat + esc(x.zitplaatsen) + ' zitplaatsen</span>');
+  if(x.huur_pm) f.push('<span>' + SVG.rent + 'huur ' + esc(fmtEUR(x.huur_pm)) + ' p/m</span>');
+  if(x.dagen!=null && x.dagen >= 7) f.push('<span>' + SVG.days + esc(x.dagen) + ' dagen te koop</span>');
+  else if(x.dagen!=null && x.dagen < 2) f.push('<span>' + SVG.days + 'Nieuw</span>');
+  return f.join("");
 }
 
 function priceLine(x){
   if(x.prijs!=null){
-    var was = x.oud && x.was_prijs ? '<span class="was">' + esc(fmtEUR(x.was_prijs)) + "</span>" : "";
+    var was = x.oud && x.was_prijs ? '<span class="was">' + esc(fmtEUR(x.was_prijs)) + "</span> " : "";
     return was + esc(fmtEUR(x.prijs));
   }
   if(x.ind){
@@ -738,19 +768,18 @@ function priceLine(x){
   return '<span style="font-size:14px;font-weight:600;color:var(--ink-dim)">prijs op aanvraag</span>';
 }
 
-function priceBadge(x){
+function priceRow(x){
   if(x.prijs!=null){
     var was = x.oud && x.was_prijs ? '<span class="was">' + esc(fmtEUR(x.was_prijs)) + "</span>" : "";
-    return '<span class="price-badge">' + was + esc(fmtEUR(x.prijs)) + "</span>";
+    return '<span class="card-price">' + esc(fmtEUR(x.prijs)) + '</span>' + was;
   }
   if(x.ind){
-    return '<span class="price-badge onbekend">indicatie ' + esc(fmtEUR(x.ind[0])) + " – " + esc(fmtEUR(x.ind[1])) + "</span>";
+    return '<span class="card-price soft" title="Geen vraagprijs bekend; indicatie op basis van vergelijkbare zaken">Indicatie ' + esc(fmtEUR(x.ind[0])) + ' – ' + esc(fmtEUR(x.ind[1])) + '</span>';
   }
-  return '<span class="price-badge onbekend">Prijs op aanvraag</span>';
+  return '<span class="card-price soft">Prijs op aanvraag</span>';
 }
 
 function card(x, id){
-  var icon = ICON[x.cat] || ICON.overig;
   var el = document.createElement("article");
   el.className = "card";
 
@@ -770,9 +799,6 @@ function card(x, id){
     src.className = "src-badge";
     src.textContent = x.bron || "";
     photoDiv.appendChild(src);
-    var priceEl = document.createElement("span");
-    priceEl.innerHTML = priceBadge(x);
-    photoDiv.appendChild(priceEl.firstChild);
   }
 
   if(x.afbeelding){
@@ -789,13 +815,19 @@ function card(x, id){
 
   var body = document.createElement("div");
   body.className = "card-body";
+  var loc = [x.plaats, x.provincie].filter(Boolean).join(" · ");
+  var badges = badgesFor(x);
   body.innerHTML =
       '<a class="card-title" href="#" data-open="' + id + '">' + esc(x.titel||"Horecazaak") + "</a>" +
-      '<div class="card-loc">' + esc([x.plaats, x.provincie].filter(Boolean).join(" · ")) + "</div>" +
-      '<div class="badge-row">' + badgesFor(x) + "</div>" +
+      (loc ? '<div class="card-loc">' + esc(loc) + "</div>" : "") +
+      '<div class="card-price-row">' + priceRow(x) + (badges ? '<span class="badge-row">' + badges + '</span>' : '') + "</div>" +
+      '<div class="card-facts">' + factsFor(x) + "</div>" +
       '<div class="card-actions">' +
-        '<label><input type="checkbox" class="cmp-check" data-id="' + id + '" ' + (compareSet.has(id)?"checked":"") + '> vergelijk</label>' +
-        '<button class="icon-btn note-btn" data-id="' + id + '" title="Notitie" aria-label="Notitie toevoegen">' + (notes[id]? "📝":"🗒️") + "</button>" +
+        '<span>' + esc(CATLABEL[x.cat] || "Horeca") + '</span>' +
+        '<span class="acts">' +
+          '<label><input type="checkbox" class="cmp-check" data-id="' + id + '" ' + (compareSet.has(id)?"checked":"") + '> Vergelijk</label>' +
+          '<button class="icon-btn note-btn' + (notes[id] ? ' has-note' : '') + '" data-id="' + id + '" type="button" aria-label="Notitie">' + SVG.note + (notes[id] ? 'Notitie' : '') + "</button>" +
+        '</span>' +
       "</div>";
 
   el.appendChild(photoDiv);
@@ -1116,7 +1148,7 @@ function initFaq(){
     ["Kan ik ook een melding per mail krijgen?", 'Automatische aanmelding via de site komt eraan. Vul tot die tijd je e-mailadres in bij "Ontvang alerts" bovenaan, of mail naar <a href="mailto:info@horecamatch.nl" style="color:inherit">info@horecamatch.nl</a> om een zoekprofiel handmatig te laten instellen.']
   ];
   document.getElementById("faq-list").innerHTML = items.map(function(it,i){
-    return '<div class="faq-item" data-idx="' + i + '"><button class="faq-q" aria-expanded="false">' + esc(it[0]) + '<span class="chevron" aria-hidden="true">▾</span></button><div class="faq-a">' + it[1] + "</div></div>";
+    return '<div class="faq-item" data-idx="' + i + '"><button class="faq-q" aria-expanded="false">' + esc(it[0]) + '<span class="chevron" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span></button><div class="faq-a">' + it[1] + "</div></div>";
   }).join("");
   document.querySelectorAll(".faq-item").forEach(function(item){
     var btn = item.querySelector(".faq-q");
