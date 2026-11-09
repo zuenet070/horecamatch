@@ -26,40 +26,33 @@
 </script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700;800&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#ffffff; --bg-alt:#f3f4f5; --card:#ffffff; --ink:#1a1c1f; --ink-dim:#5c6066;
-  --line:#dde0e3; --accent:#33465a; --accent-ink:#222f3d; --accent-soft:#eaedf0;
-  --brand:#1a1c1f; --brand-soft:#2c2f33; --brand-ink:#ffffff;
+  --bg:#faf8f3; --bg-alt:#f0ebe1; --card:#fffdf9; --ink:#2e2b26; --ink-dim:#716a5d;
+  --line:#e2dbcb; --accent:#7a5c2e; --accent-ink:#56401f; --accent-soft:#f1e7d3;
+  --brand:#18140f; --brand-soft:#262019; --brand-ink:#faf8f3;
   --good:#256b4e; --good-soft:#e7f1ec; --bad:#a13b32; --bad-soft:#f7eae8;
-  --focus:#33465a; --radius:3px; --shadow:0 1px 3px rgba(20,22,25,.08);
-  --shadow-lg:0 10px 26px rgba(20,22,25,.14);
-  --serif:'IBM Plex Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
-  --sans:'IBM Plex Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+  --focus:#7a5c2e; --radius:6px; --shadow:0 1px 3px rgba(24,19,13,.10);
+  --shadow-lg:0 10px 26px rgba(24,19,13,.16);
+  --serif:'Nunito Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+  --sans:'Nunito Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
   --mono:'IBM Plex Mono','SFMono-Regular',Consolas,monospace;
 }
-@media (prefers-color-scheme: dark){
-  :root:not([data-theme="light"]){
-    --bg:#111214; --bg-alt:#191b1e; --card:#1a1c1f; --ink:#eef0f2; --ink-dim:#989ea3;
-    --line:#2c2f33; --accent:#8296ac; --accent-ink:#aab8c8; --accent-soft:#20262c;
-    --brand:#0a0b0c; --brand-soft:#1e2124; --brand-ink:#eef0f2;
-    --good:#4fae8a; --good-soft:#132520; --bad:#d17e73; --bad-soft:#2b1714;
-    --focus:#8296ac; --shadow:0 1px 3px rgba(0,0,0,.4); --shadow-lg:0 10px 26px rgba(0,0,0,.55);
-  }
-}
+/* Site is altijd licht (zoals Funda). Donker alleen als expliciet data-theme="dark" wordt gezet. */
 :root[data-theme="dark"]{
-  --bg:#111214; --bg-alt:#191b1e; --card:#1a1c1f; --ink:#eef0f2; --ink-dim:#989ea3;
-  --line:#2c2f33; --accent:#8296ac; --accent-ink:#aab8c8; --accent-soft:#20262c;
-  --brand:#0a0b0c; --brand-soft:#1e2124; --brand-ink:#eef0f2;
+  --bg:#15130f; --bg-alt:#1c1813; --card:#1f1b15; --ink:#f3efe5; --ink-dim:#a79d8b;
+  --line:#332c22; --accent:#d4a657; --accent-ink:#e3bd7c; --accent-soft:#2c2415;
+  --brand:#0b0907; --brand-soft:#1b1711; --brand-ink:#f3efe5;
   --good:#4fae8a; --good-soft:#132520; --bad:#d17e73; --bad-soft:#2b1714;
-  --focus:#8296ac; --shadow:0 1px 3px rgba(0,0,0,.4); --shadow-lg:0 10px 26px rgba(0,0,0,.55);
+  --focus:#d4a657; --shadow:0 1px 3px rgba(0,0,0,.4); --shadow-lg:0 10px 26px rgba(0,0,0,.55);
 }
 body{background:var(--bg);color:var(--ink);font-family:var(--sans)}
 h1,h2,h3{font-family:var(--serif);font-weight:600;letter-spacing:-.01em;text-wrap:balance}
 .mono,.card-price,.price-badge,.stat b,#hero-n,#v-multi,#v-verk,.kv-grid .v,.compare-table td,.compare-table th,.calc-out,#rev-out{font-family:var(--mono);font-variant-numeric:tabular-nums}
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
+[id]{scroll-margin-top:76px}
 body{margin:0;line-height:1.5}
 img{max-width:100%}
 a{color:var(--accent-ink)}
@@ -74,7 +67,8 @@ button{font-family:inherit}
 /* topbar */
 .topbar{position:sticky;top:0;z-index:50;background:var(--brand);border-bottom:1px solid rgba(255,255,255,.08)}
 .topbar-in{display:flex;align-items:center;justify-content:space-between;height:64px}
-.logo{display:flex;align-items:center;font-family:var(--serif);font-weight:600;font-size:20px;color:#fff;text-decoration:none;letter-spacing:-.01em}
+.logo{display:flex;align-items:center;gap:7px;font-family:var(--serif);font-weight:600;font-size:21px;color:#fff;text-decoration:none;letter-spacing:-.01em}
+.logo svg{width:19px;height:19px;flex:0 0 auto;color:var(--focus,#d4a657)}
 .nav{display:flex;gap:26px;align-items:center}
 .nav a{color:#a8acb1;text-decoration:none;font-size:13.5px;font-weight:600;letter-spacing:.01em}
 .nav a:hover{color:#fff}
@@ -92,43 +86,40 @@ button{font-family:inherit}
 .nav-mobile.open{display:flex}
 .nav-mobile a{color:#c7ccd1;text-decoration:none;font-size:14.5px;font-weight:600;padding:13px 4px;border-bottom:1px dashed rgba(255,255,255,.12)}
 .nav-mobile a:last-child{border-bottom:none}
-@media (max-width:760px){.nav{display:none}.nav-toggle{display:flex}}
+@media (max-width:760px){.nav{display:none}.nav-toggle{display:flex}.topbar-in{gap:10px}.logo{font-size:19px;flex:0 1 auto;min-width:0}.topbar .btn-primary{white-space:nowrap;padding:9px 13px;font-size:13px}.topbar .btn-primary .btn-long{display:none}.topbar .btn-primary .btn-short{display:inline}}
+.btn-short{display:none}
 
-/* intro strip — kept deliberately short so the listings sit near the top */
-.intro{padding:28px 0 32px;background:var(--brand);color:var(--brand-ink)}
-.intro-in{display:flex;flex-direction:column;gap:18px}
-.intro-text{max-width:640px}
-.eyebrow{display:inline-flex;align-items:center;gap:6px;color:#a8acb1;font-size:11.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;margin-bottom:8px}
-.intro h1{font-size:clamp(19px,2.3vw,25px);font-weight:600;letter-spacing:-.01em;margin:0;color:#fff}
-.intro-sub{font-size:14.5px;line-height:1.55;color:#c3c6ca;margin:8px 0 0;max-width:560px}
+/* intro strip — illustrated banner, kept short so the listings sit near the top */
+.intro{padding:26px 0 32px;background:var(--bg);color:var(--ink)}
+.intro-head{margin-bottom:16px}
+.intro h1{font-size:clamp(22px,2.7vw,30px);font-weight:600;letter-spacing:-.01em;margin:0;color:var(--ink);max-width:640px}
 
-.hero-search{display:flex;gap:10px;flex-wrap:wrap;align-items:end;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.14);padding:14px;border-radius:var(--radius)}
+.hero-banner{width:calc(100% - 40px);max-width:1140px;margin:0 auto;height:clamp(170px,26vw,300px);border-radius:var(--radius);overflow:hidden;background:#f9ead2}
+@media (max-width:760px){.hero-banner{width:100%;border-radius:0}}
+.hero-banner svg{width:100%;height:100%;display:block}
+
+.hero-search{display:flex;gap:10px;flex-wrap:wrap;align-items:end;background:var(--card);border:1px solid var(--line);box-shadow:var(--shadow-lg);padding:16px;border-radius:var(--radius);position:relative;z-index:2;margin:-28px auto 0;width:calc(100% - 68px);max-width:1112px}
 .hs-field{display:flex;flex-direction:column;gap:5px;flex:1 1 200px;min-width:180px}
-.hs-field label{font-size:10.5px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:#a8acb1}
-.hs-field input,.hs-field select{background:#fff;border:1px solid #c7ccd1;border-radius:var(--radius);padding:10px 12px;font-size:14px;font-family:var(--sans);color:#1a1c1f;height:38px}
+.hs-field label{font-size:12px;font-weight:600;color:var(--ink-dim)}
+.hs-field input,.hs-field select{background:#fff;border:1px solid #d8d0bf;border-radius:var(--radius);padding:10px 12px;font-size:14px;font-family:var(--sans);color:#1d1a15;height:38px}
 .hs-submit{padding:0 26px;height:38px;white-space:nowrap;flex:0 0 auto}
 
-.intro-bottom{display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap}
-.hero-quick{font-size:12.5px;color:#8b8f94}
-.hero-quick a{color:#d4d6d9;text-decoration:none;font-weight:600;margin-left:6px}
-.hero-quick a:hover{color:#fff;text-decoration:underline}
+.intro-bottom{display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap;margin-top:18px}
+.hero-quick{font-size:12.5px;color:var(--ink-dim)}
+.hero-quick a{color:var(--ink);text-decoration:none;font-weight:600;margin-left:6px}
+.hero-quick a:hover{color:var(--accent-ink);text-decoration:underline}
 .intro-stats{display:flex;gap:30px;flex-wrap:wrap;margin:0}
 .intro-stats > div{display:flex;flex-direction:column-reverse;gap:2px}
-.intro-stats dt{font-size:10.5px;text-transform:uppercase;letter-spacing:.05em;color:#8b8f94;font-weight:600}
-.intro-stats dd{margin:0;font-family:var(--mono);font-size:20px;font-weight:600;color:#fff}
-.intro-stats .scan dd{font-size:14px;color:#d4d6d9;font-family:var(--sans);font-weight:600}
-@media (max-width:760px){.intro-stats{gap:20px}.hero-search{flex-direction:column;align-items:stretch}.hs-field{flex:0 0 auto;min-width:0}.hs-submit{width:100%}}
-
-/* spotlight */
-.spotlight{padding:36px 0 8px}
-.spotlight-head{display:flex;justify-content:space-between;align-items:baseline;gap:16px;flex-wrap:wrap;margin-bottom:16px}
-.spotlight-head h2{margin:0}
-.spotlight-link{color:var(--accent);text-decoration:none;font-weight:600;font-size:13.5px;white-space:nowrap}
-.spotlight-link:hover{text-decoration:underline}
+.intro-stats dt{font-size:12px;color:var(--ink-dim);font-weight:600}
+.intro-stats dd{margin:0;font-family:var(--mono);font-size:20px;font-weight:600;color:var(--ink)}
+.intro-stats .scan dd{font-size:14px;color:var(--ink-dim);font-family:var(--sans);font-weight:600}
+@media (max-width:760px){.intro-stats{gap:20px}.hero-search{flex-direction:column;align-items:stretch;margin:-20px auto 0;width:calc(100% - 28px)}.hs-field{flex:0 0 auto;min-width:0}.hs-submit{width:100%}}
+.dateline{display:inline-flex;align-items:center;gap:6px;color:#8b8374;font-size:11.5px;font-family:var(--mono);margin-top:14px}
+.dateline .live-dot{width:6px;height:6px}
 
 /* ticker, now tucked into the filter sidebar */
 .ticker-block{margin-top:18px;padding-top:16px;border-top:1px solid var(--line)}
-.ticker-block h4{font-size:11px;text-transform:uppercase;letter-spacing:.04em;color:var(--ink-dim);display:flex;align-items:center;gap:7px;margin:0 0 10px;font-weight:700}
+.ticker-block h4{font-size:13.5px;color:var(--ink);display:flex;align-items:center;gap:7px;margin:0 0 10px;font-weight:700}
 .live-dot{width:7px;height:7px;border-radius:50%;background:var(--good);display:inline-block;animation:pulse 1.8s infinite}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
 #tick{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:9px}
@@ -146,10 +137,23 @@ button{font-family:inherit}
 @media (max-width:900px){.layout{grid-template-columns:1fr}}
 
 .filters{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:18px;position:sticky;top:80px}
-@media (max-width:900px){.filters{position:static}}
+.filters-toggle{display:none;align-items:center;gap:7px;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:8px;padding:8px 12px;font-size:13px;font-weight:700;cursor:pointer}
+.filters-toggle[aria-expanded="true"]{background:var(--accent);border-color:var(--accent);color:#fff}
+.filters-n{display:inline-flex;align-items:center;justify-content:center;min-width:18px;height:18px;padding:0 5px;border-radius:999px;background:var(--accent);color:#fff;font-size:11px;font-weight:800}
+.filters-toggle[aria-expanded="true"] .filters-n{background:#fff;color:var(--accent)}
+.filters-apply{display:none}
+@media (max-width:900px){
+  .filters{display:none}
+  .filters.open{display:block;position:fixed;inset:0;z-index:100;overflow:auto;border-radius:0;border:none;padding:18px 18px 96px}
+  .filters-toggle{display:inline-flex}
+  .filters .ticker-block{display:none}
+  .filters-apply{display:flex;gap:10px;position:fixed;left:0;right:0;bottom:0;z-index:101;padding:12px 18px calc(12px + env(safe-area-inset-bottom));background:var(--card);border-top:1px solid var(--line)}
+  .filters-apply .btn{flex:1;justify-content:center;height:44px}
+  body.filters-locked{overflow:hidden}
+}
 .filter-group{margin-bottom:18px;padding-bottom:18px;border-bottom:1px solid var(--line)}
 .filter-group:last-child{border-bottom:none;margin-bottom:0}
-.filter-group h4{font-size:12.5px;text-transform:uppercase;letter-spacing:.04em;color:var(--ink-dim);margin:0 0 10px}
+.filter-group h4{font-size:13.5px;font-weight:700;color:var(--ink);margin:0 0 10px}
 .chips{display:flex;flex-wrap:wrap;gap:6px}
 .chip{border:1px solid var(--line);background:var(--bg);border-radius:999px;padding:6px 12px;font-size:13px;cursor:pointer;display:flex;align-items:center;gap:6px;user-select:none}
 .chip .n{color:var(--ink-dim);font-size:11.5px}
@@ -172,11 +176,12 @@ button{font-family:inherit}
 .card:hover{box-shadow:var(--shadow-lg);transform:translateY(-2px)}
 .card-photo{position:relative;aspect-ratio:4/3;background:var(--bg-alt);overflow:hidden}
 .card-photo img{width:100%;height:100%;object-fit:cover;display:block}
-.card-photo .fallback{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:11.5px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:#9a9ea3;background:var(--bg-alt)}
-.src-badge{position:absolute;top:10px;right:10px;font-size:10.5px;font-weight:600;background:rgba(255,255,255,.92);color:var(--ink);padding:4px 9px;border:1px solid var(--line);letter-spacing:.02em}
-.price-badge{position:absolute;left:10px;bottom:10px;font-size:15px;font-weight:600;background:rgba(20,22,25,.88);color:#fff;padding:6px 11px;max-width:calc(100% - 20px)}
-.price-badge .was{font-size:11px;font-weight:500;text-decoration:line-through;opacity:.75;margin-right:5px}
-.price-badge.onbekend{font-weight:700;font-size:13px;background:rgba(11,21,36,.7)}
+.card-photo .fallback{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:11.5px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:#9b9282;background:var(--bg-alt)}
+.src-badge{position:absolute;top:10px;right:10px;font-size:10.5px;font-weight:600;background:rgba(255,255,255,.94);color:#1d1a15;padding:4px 9px;border:1px solid rgba(24,19,13,.12);letter-spacing:.02em}
+.price-badge{position:absolute;left:0;bottom:13px;font-size:15px;font-weight:600;background:rgba(24,19,13,.92);color:#fff;padding:7px 14px 7px 21px;max-width:calc(100% - 14px);clip-path:polygon(13px 0,100% 0,100% 100%,13px 100%,0 50%);box-shadow:0 2px 6px rgba(24,19,13,.3)}
+.was{font-size:11px;font-weight:500;text-decoration:line-through;opacity:.75;margin-right:6px}
+.price-badge .was{font-size:11px}
+.price-badge.onbekend{font-weight:700;font-size:13px;background:rgba(24,19,13,.78)}
 .card-body{padding:14px 16px;display:flex;flex-direction:column;gap:8px;flex:1}
 .card-title{font-size:15px;font-weight:700;margin:0;text-decoration:none;color:var(--ink)}
 .card-title:hover{text-decoration:underline}
@@ -198,32 +203,22 @@ button{font-family:inherit}
 /* verkocht */
 .sold-section{padding:48px 0;border-top:1px solid var(--line);background:var(--bg-alt)}
 .sold-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:14px;margin-top:20px}
+.sold-note{grid-column:1 / -1;margin:0;font-size:13px;color:var(--ink-dim)}
 .sold-card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px}
 .sold-card .tag{display:inline-block;background:var(--good-soft);color:var(--good);font-size:11px;font-weight:800;padding:3px 8px;border-radius:999px;margin-bottom:8px}
 .sold-card h4{font-size:14px;margin:0 0 4px}
 .sold-card p{font-size:12.5px;color:var(--ink-dim);margin:0}
-.stille-teaser{margin-top:28px;background:var(--card);border:1px dashed var(--line);border-radius:var(--radius);padding:20px;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
-.soon-badge{background:var(--accent-soft);color:var(--accent-ink);font-size:11px;font-weight:800;padding:3px 9px;border-radius:999px}
 
-/* insight */
-.insight{padding:48px 0;border-top:1px solid var(--line)}
-.insight-grid{display:grid;grid-template-columns:1.3fr 1fr;gap:32px}
-@media (max-width:860px){.insight-grid{grid-template-columns:1fr}}
-.bar-row{display:grid;grid-template-columns:110px 1fr 40px;align-items:center;gap:10px;margin-bottom:8px;font-size:13px}
-.bar-track{background:var(--bg-alt);border-radius:6px;height:12px;overflow:hidden}
-.bar-fill{height:100%;background:var(--accent)}
-.usp-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:16px}
-.usp-list li{display:flex;gap:14px;font-size:14px;padding-left:16px;border-left:2px solid var(--accent)}
-.usp-list b{font-family:var(--serif);font-weight:600;font-size:15px}
-
-/* alert cta */
-.cta{padding:56px 0;border-top:1px solid var(--line)}
-.cta-box{background:var(--brand);color:#fff;border-radius:var(--radius);padding:44px;text-align:center}
-.cta-box h2{font-size:26px}
-.cta-box p{color:#aeb8c9;max-width:52ch;margin:0 auto 22px}
-.cta-form{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;max-width:440px;margin:0 auto}
-.cta-form input{flex:1;min-width:200px;border-radius:9px;border:none;padding:12px 14px;font-size:14px}
-.cta-note{font-size:12px;color:#7c8aa0;margin-top:12px}
+/* alert cta — a slim bar, not a boxed-in marketing block */
+.cta{padding:0}
+.cta-bar{background:var(--brand);color:#fff;padding:22px 20px;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap}
+.cta-text{display:flex;flex-direction:column;gap:2px;max-width:46ch}
+.cta-text strong{font-size:15px}
+.cta-text span{font-size:13px;color:#b5ad9d}
+.cta-form{display:flex;gap:10px;flex-wrap:wrap;flex:0 0 auto}
+.cta-form input{min-width:200px;border-radius:var(--radius);border:1px solid #4a4336;background:rgba(255,255,255,.06);color:#fff;padding:10px 12px;font-size:14px}
+.cta-form input::placeholder{color:#8b8374}
+@media (max-width:640px){.cta-bar{flex-direction:column;align-items:stretch}.cta-form{flex-direction:column}.cta-form input{min-width:0}}
 
 /* faq */
 .faq{padding:48px 0;border-top:1px solid var(--line)}
@@ -266,16 +261,14 @@ textarea.note{width:100%;border:1px solid var(--line);border-radius:8px;padding:
 
 <header class="topbar">
   <div class="wrap topbar-in">
-    <a href="#top" class="logo">HorecaMatch</a>
+    <a href="#top" class="logo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.59 13.41 11 3.83A2 2 0 0 0 9.59 3.24L4 3a1 1 0 0 0-1 1l.24 5.59a2 2 0 0 0 .59 1.41l9.58 9.58a2 2 0 0 0 2.83 0l4.35-4.35a2 2 0 0 0 0-2.82Z"/><circle cx="7.5" cy="7.5" r="1.1" fill="currentColor" stroke="none"/></svg>HorecaMatch</a>
     <nav class="nav" aria-label="Hoofdmenu">
       <a href="#market">Aanbod</a>
       <a href="#verkocht">Verkocht</a>
-      <a href="#insight">Marktinzicht</a>
-      <a href="#over">Over ons</a>
       <a href="#faq">Vragen</a>
     </nav>
     <div class="topbar-actions">
-      <a href="#cta" class="btn btn-primary">Ontvang alerts</a>
+      <a href="#cta" class="btn btn-primary"><span class="btn-long">Ontvang alerts</span><span class="btn-short">Alerts</span></a>
       <button class="nav-toggle" id="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-mobile" aria-label="Menu openen">
         <span></span><span></span><span></span>
       </button>
@@ -285,8 +278,6 @@ textarea.note{width:100%;border:1px solid var(--line);border-radius:8px;padding:
     <nav class="nav-mobile" id="nav-mobile" aria-label="Mobiel menu">
       <a href="#market">Aanbod</a>
       <a href="#verkocht">Verkocht</a>
-      <a href="#insight">Marktinzicht</a>
-      <a href="#over">Over ons</a>
       <a href="#faq">Vragen</a>
     </nav>
   </div>
@@ -294,44 +285,111 @@ textarea.note{width:100%;border:1px solid var(--line);border-radius:8px;padding:
 
 <main id="top">
   <section class="intro">
-    <div class="wrap intro-in">
-      <div class="intro-text">
-        <span class="eyebrow">Eén markt, alle bronnen</span>
-        <h1>Elk horecapand te koop in Nederland — van alle makelaars, op één plek.</h1>
-        <p class="intro-sub">HorecaMatch verzamelt dagelijks het aanbod van de grote horecamakelaars, herkent wanneer dezelfde zaak op meerdere sites staat en signaleert prijsdalingen die je zelf snel mist.</p>
+    <div class="wrap intro-head">
+      <h1>Elk horecapand te koop in Nederland, op één plek</h1>
+    </div>
+
+    <div class="hero-banner" aria-hidden="true">
+      <svg viewBox="0 0 1200 520" preserveAspectRatio="xMidYMax slice" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="hbSky" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#eef4f6"/>
+            <stop offset="100%" stop-color="#f9ead2"/>
+          </linearGradient>
+        </defs>
+        <rect width="1200" height="520" fill="url(#hbSky)"/>
+        <!-- straat: vlak, zodat alles op dezelfde lijn staat -->
+        <path d="M0,424 C200,416 350,426 520,418 C720,410 900,422 1200,414 L1200,520 L0,520 Z" fill="#e8d2a2"/>
+        <!-- skyline links: salie + brons -->
+        <g>
+          <rect x="0" y="285" width="92" height="135" rx="2" fill="#9fb78e"/>
+          <polygon points="0,285 46,253 92,285" fill="#8aa479"/>
+          <g fill="#d6e3cc">
+            <rect x="18" y="305" width="16" height="22" rx="2"/><rect x="46" y="305" width="16" height="22" rx="2"/>
+            <rect x="18" y="341" width="16" height="22" rx="2"/><rect x="46" y="341" width="16" height="22" rx="2"/>
+          </g>
+          <rect x="130" y="315" width="70" height="105" rx="2" fill="#cfae6e"/>
+          <g fill="#ecdcb6">
+            <rect x="146" y="335" width="14" height="20" rx="2"/><rect x="170" y="335" width="14" height="20" rx="2"/>
+          </g>
+        </g>
+        <!-- skyline rechts: terracotta + brons -->
+        <g>
+          <rect x="980" y="300" width="84" height="120" rx="2" fill="#c98662"/>
+          <polygon points="980,300 1022,270 1064,300" fill="#b3714f"/>
+          <g fill="#edcdb9">
+            <rect x="998" y="320" width="16" height="22" rx="2"/><rect x="1028" y="320" width="16" height="22" rx="2"/>
+            <rect x="998" y="356" width="16" height="22" rx="2"/><rect x="1028" y="356" width="16" height="22" rx="2"/>
+          </g>
+          <rect x="1086" y="330" width="66" height="90" rx="2" fill="#cfae6e"/>
+          <g fill="#ecdcb6">
+            <rect x="1100" y="350" width="14" height="20" rx="2"/><rect x="1124" y="350" width="14" height="20" rx="2"/>
+          </g>
+        </g>
+        <!-- bomen -->
+        <g>
+          <rect x="905" y="374" width="9" height="46" rx="3" fill="#8a6a3a"/>
+          <circle cx="909" cy="358" r="30" fill="#7fa36c"/>
+        </g>
+        <g>
+          <rect x="228" y="380" width="8" height="40" rx="3" fill="#8a6a3a"/>
+          <circle cx="232" cy="366" r="26" fill="#8db57a"/>
+        </g>
+        <!-- het horecapand -->
+        <g>
+          <rect x="430" y="190" width="340" height="230" rx="6" fill="#fdf8ee" stroke="#3a2f20" stroke-width="3"/>
+          <path d="M412,207 L788,207 L766,255 L434,255 Z" fill="#c2532f"/>
+          <g fill="#f6e9d2">
+            <path d="M434,255 L471,255 L480,207 L444,207 Z"/>
+            <path d="M508,255 L545,255 L551,207 L518,207 Z"/>
+            <path d="M582,255 L619,255 L622,207 L592,207 Z"/>
+            <path d="M656,255 L693,255 L693,207 L666,207 Z"/>
+            <path d="M730,255 L767,255 L764,207 L739,207 Z"/>
+          </g>
+          <rect x="412" y="199" width="376" height="10" fill="#3a2f20"/>
+          <rect x="455" y="275" width="80" height="90" rx="3" fill="#cfe4e4" stroke="#3a2f20" stroke-width="3"/>
+          <line x1="495" y1="275" x2="495" y2="365" stroke="#3a2f20" stroke-width="2.5"/>
+          <line x1="455" y1="320" x2="535" y2="320" stroke="#3a2f20" stroke-width="2.5"/>
+          <rect x="665" y="275" width="80" height="90" rx="3" fill="#cfe4e4" stroke="#3a2f20" stroke-width="3"/>
+          <line x1="705" y1="275" x2="705" y2="365" stroke="#3a2f20" stroke-width="2.5"/>
+          <line x1="665" y1="320" x2="745" y2="320" stroke="#3a2f20" stroke-width="2.5"/>
+          <rect x="568" y="293" width="64" height="127" rx="3" fill="#7a5c2e" stroke="#3a2f20" stroke-width="3"/>
+          <line x1="600" y1="293" x2="600" y2="420" stroke="#3a2f20" stroke-width="2"/>
+          <circle cx="616" cy="358" r="3.5" fill="#f3e6cd"/>
+          <rect x="583" y="263" width="34" height="20" rx="2" fill="#c2532f" stroke="#3a2f20" stroke-width="2"/>
+        </g>
+        <!-- te-koop-bord -->
+        <g transform="translate(345,345)">
+          <rect x="-3" y="0" width="7" height="75" fill="#5c4a30"/>
+          <rect x="-58" y="-48" width="116" height="54" rx="4" fill="#faf8f3" stroke="#3a2f20" stroke-width="3"/>
+          <text x="0" y="-23" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="16" font-weight="700" fill="#c2532f">TE KOOP</text>
+          <text x="0" y="-3" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11" fill="#5c4a30">HorecaMatch</text>
+        </g>
+      </svg>
+    </div>
+
+    <form class="hero-search" id="hero-search">
+      <div class="hs-field">
+        <label for="hero-plaats">Plaats of provincie</label>
+        <input type="text" id="hero-plaats" list="plaatsen-list" placeholder="Bijv. Rotterdam">
       </div>
+      <div class="hs-field">
+        <label for="hero-cat">Categorie</label>
+        <select id="hero-cat"><option value="">Alle categorieën</option></select>
+      </div>
+      <button class="btn btn-primary hs-submit" type="submit">Zoeken</button>
+    </form>
 
-      <form class="hero-search" id="hero-search">
-        <div class="hs-field">
-          <label for="hero-plaats">Plaats of provincie</label>
-          <input type="text" id="hero-plaats" list="plaatsen-list" placeholder="Bijv. Rotterdam">
-        </div>
-        <div class="hs-field">
-          <label for="hero-cat">Categorie</label>
-          <select id="hero-cat"><option value="">Alle categorieën</option></select>
-        </div>
-        <button class="btn btn-primary hs-submit" type="submit">Zoeken</button>
-      </form>
-
+    <div class="wrap">
       <div class="intro-bottom">
         <div class="hero-quick">Populair:<a href="#" data-plaats="Amsterdam">Amsterdam</a><a href="#" data-plaats="Rotterdam">Rotterdam</a><a href="#" data-plaats="Utrecht">Utrecht</a><a href="#" data-plaats="Noord-Brabant">Noord-Brabant</a></div>
         <dl class="intro-stats">
           <div><dt>Te koop</dt><dd id="hero-n">–</dd></div>
           <div><dt>Multi-source</dt><dd id="v-multi">–</dd></div>
           <div><dt>Verkocht gesignaleerd</dt><dd id="v-verk">–</dd></div>
-          <div class="scan"><dt>Laatste marktscan</dt><dd id="scanline">–</dd></div>
         </dl>
       </div>
-    </div>
-  </section>
-
-  <section class="spotlight" id="spotlight">
-    <div class="wrap">
-      <div class="spotlight-head">
-        <h2>In de spotlight</h2>
-        <a href="#market" class="spotlight-link">Bekijk al het aanbod →</a>
-      </div>
-      <div class="grid" id="spotlight-grid"></div>
+      <span class="dateline"><span class="live-dot" aria-hidden="true"></span><span id="hero-dateline">Bijgewerkt op –</span></span>
     </div>
   </section>
 
@@ -342,7 +400,7 @@ textarea.note{width:100%;border:1px solid var(--line);border-radius:8px;padding:
         <div id="result-count" role="status" aria-live="polite"></div>
       </div>
       <div class="layout">
-        <aside class="filters" aria-label="Filters">
+        <aside class="filters" id="filters-panel" aria-label="Filters">
           <div class="filter-group">
             <h4>Categorie</h4>
             <div class="chips" id="chips-cat"></div>
@@ -376,6 +434,11 @@ textarea.note{width:100%;border:1px solid var(--line);border-radius:8px;padding:
           </div>
           <button class="reset-btn" id="reset-filters" type="button">Filters wissen</button>
 
+          <div class="filters-apply">
+            <button class="btn btn-ghost" id="filters-close" type="button">Sluiten</button>
+            <button class="btn btn-primary" id="filters-apply" type="button">Toon <span id="filters-apply-n">–</span> zaken</button>
+          </div>
+
           <div class="ticker-block">
             <h4><span class="live-dot" aria-hidden="true"></span> Laatste signaleringen</h4>
             <ul id="tick"></ul>
@@ -384,6 +447,10 @@ textarea.note{width:100%;border:1px solid var(--line);border-radius:8px;padding:
 
         <div>
           <div class="toolbar">
+            <button class="filters-toggle" id="filters-toggle" type="button" aria-expanded="false" aria-controls="filters-panel">
+              <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M7 12h10M10 18h4"/></svg>
+              Filters<span class="filters-n" id="filters-n" hidden></span>
+            </button>
             <label class="sr-only" for="sort-select">Sorteren</label>
             <select id="sort-select">
               <option value="nieuw">Nieuwste eerst</option>
@@ -409,60 +476,19 @@ textarea.note{width:100%;border:1px solid var(--line);border-radius:8px;padding:
       <h2>Recent verkocht</h2>
       <p style="color:var(--ink-dim);max-width:60ch">Zaken die van de markt zijn — een goed signaal voor hoe snel de markt in jouw regio beweegt. Iets wat andere aanbodsites niet laten zien.</p>
       <div class="sold-grid" id="sold-grid"></div>
-      <div class="stille-teaser">
-        <div>
-          <span class="soon-badge">BINNENKORT</span>
-          <h3 style="margin:8px 0 4px">De stille markt</h3>
-          <p style="margin:0;color:var(--ink-dim);font-size:13.5px;max-width:56ch">Omgekeerd zoeken: geef aan wat je zoekt, en horecamakelaars met een passend (nog niet openbaar) pand kunnen contact opnemen.</p>
-        </div>
-        <a href="#cta" class="btn btn-ghost">Hou me op de hoogte</a>
-      </div>
-    </div>
-  </section>
-
-  <section class="insight" id="insight">
-    <div class="wrap insight-grid">
-      <div>
-        <h2>Marktinzicht</h2>
-        <p style="color:var(--ink-dim);margin-bottom:20px">Aanbod per provincie, op basis van de huidige snapshot.</p>
-        <div id="prov-bars"></div>
-      </div>
-      <div>
-        <h2>Waarom HorecaMatch</h2>
-        <ul class="usp-list">
-          <li><div><b>Alles op één plek.</b><br>Meerdere aanbodsites samengevoegd en ontdubbeld, dus geen dubbel werk.</div></li>
-          <li><div><b>Prijsdalingen zichtbaar.</b><br>Wij volgen de vraagprijs over tijd, niet alleen het huidige bedrag.</div></li>
-          <li><div><b>Verkocht-detectie.</b><br>Ziet een zaak nergens meer? Dan markeren wij 'm als vermoedelijk verkocht, mét doorlooptijd.</div></li>
-          <li><div><b>Prijsbenchmarks.</b><br>Elke vraagprijs vergeleken met de mediaan van vergelijkbare zaken in die categorie.</div></li>
-        </ul>
-      </div>
-    </div>
-  </section>
-
-  <section class="insight" id="over" style="border-top:1px solid var(--line)">
-    <div class="wrap insight-grid">
-      <div>
-        <h2>Over HorecaMatch</h2>
-        <p style="color:var(--ink-dim);max-width:60ch">HorecaMatch is een onafhankelijk overzicht van horecabedrijven te koop in Nederland. We bouwen geen eigen aanbod op — we verzamelen wat al openbaar op meerdere aanbodsites staat, ontdubbelen dat tot één lijst, en volgen elke zaak over tijd bij zodat prijsdalingen en verkopen zichtbaar worden. Voor het kopen of aanmelden van een zaak verwijzen we altijd door naar de oorspronkelijke bron.</p>
-      </div>
-      <div>
-        <h3 style="font-size:16px;margin:0 0 10px">Contact</h3>
-        <p style="color:var(--ink-dim);max-width:56ch;margin:0">Vraag, correctie, of wil je als horecamakelaar je aanbod hier laten meelopen? Mail naar <a href="mailto:info@horecamatch.nl" style="color:var(--accent);font-weight:600">info@horecamatch.nl</a>.</p>
-      </div>
     </div>
   </section>
 
   <section class="cta" id="cta">
-    <div class="wrap">
-      <div class="cta-box">
-        <h2>Mis geen nieuwe zaak meer</h2>
-        <p>Stel je zoekprofiel in en ontvang een melding zodra er iets nieuws bijkomt dat past — of de vraagprijs van een zaak die je volgt, zakt.</p>
-        <form class="cta-form" id="cta-form" aria-label="Alert aanmelden">
-          <input type="email" id="cta-email" placeholder="jouw@email.nl" aria-label="E-mailadres" required>
-          <button class="btn btn-primary" type="submit">Meld me aan</button>
-        </form>
-        <p class="cta-note">Automatische aanmelding via de site komt binnenkort. Nu al: klik "Meld me aan" en we stellen je zoekprofiel handmatig in — of mail direct naar <a href="mailto:info@horecamatch.nl" style="color:inherit">info@horecamatch.nl</a>.</p>
+    <div class="wrap cta-bar">
+      <div class="cta-text">
+        <strong>Mis geen nieuwe zaak meer.</strong>
+        <span>Meld je aan voor een melding bij nieuw aanbod of een prijsdaling.</span>
       </div>
+      <form class="cta-form" id="cta-form" aria-label="Alert aanmelden">
+        <input type="email" id="cta-email" placeholder="jouw@email.nl" aria-label="E-mailadres" required>
+        <button class="btn btn-primary" type="submit">Meld me aan</button>
+      </form>
     </div>
   </section>
 
@@ -474,11 +500,14 @@ textarea.note{width:100%;border:1px solid var(--line);border-radius:8px;padding:
   </section>
 </main>
 
-<footer>
-  <div class="wrap foot-grid">
-    <div>© <span id="foot-year"></span> HorecaMatch — laatste marktscan: <span id="foot-snap">–</span></div>
-    <div>Data afkomstig van openbare aanbodsites, uitsluitend zaken waar dataverzameling is toegestaan.</div>
-    <div><a href="#over" style="color:inherit">Over ons</a> · <a href="mailto:info@horecamatch.nl" style="color:inherit">info@horecamatch.nl</a></div>
+<footer id="over">
+  <div class="wrap">
+    <p style="max-width:68ch;margin:0 0 16px">HorecaMatch is een onafhankelijk overzicht van horecabedrijven te koop in Nederland. We bouwen geen eigen aanbod op — we verzamelen wat al openbaar op meerdere aanbodsites staat, ontdubbelen dat tot één lijst, en volgen elke zaak over tijd zodat prijsdalingen en verkopen zichtbaar worden. Voor het kopen of aanmelden van een zaak verwijzen we altijd door naar de oorspronkelijke bron.</p>
+    <div class="foot-grid">
+      <div>© <span id="foot-year"></span> HorecaMatch — laatste marktscan: <span id="foot-snap">–</span></div>
+      <div>Data afkomstig van openbare aanbodsites, uitsluitend zaken waar dataverzameling is toegestaan.</div>
+      <div><a href="mailto:info@horecamatch.nl" style="color:inherit">info@horecamatch.nl</a> — vraag, correctie, of je aanbod laten meelopen?</div>
+    </div>
   </div>
 </footer>
 
@@ -502,9 +531,24 @@ textarea.note{width:100%;border:1px solid var(--line);border-radius:8px;padding:
   </div>
 </div>
 
-<script src="sitedata.js"></script>
 <script>
+/* Data-loader: sitedata.js staat naast index.html in de repo (dagelijks ververst).
+   Open je index.html los op je eigen computer, dan ontbreekt dat bestand - dan
+   halen we de live kopie van de site op, zodat je altijd het echte aanbod ziet. */
 (function(){
+  function load(src, ok, fail){
+    var s = document.createElement("script");
+    s.src = src; s.onload = ok; s.onerror = fail;
+    document.head.appendChild(s);
+  }
+  function start(){ if(window.__hmStart) window.__hmStart(); else window.__hmReady = true; }
+  load("sitedata.js", start, function(){
+    load("https://zuenet070.github.io/horecamatch/sitedata.js", start, start);
+  });
+})();
+</script>
+<script>
+window.__hmStart = function(){
 "use strict";
 
 function fold(s){
@@ -679,10 +723,6 @@ function badgesFor(x){
   var b = [];
   if(x.oud) b.push('<span class="badge badge-drop">↓ prijs verlaagd</span>');
   if(x.extra_src && x.extra_src.length) b.push('<span class="badge badge-multi">geverifieerd op ' + (1+x.extra_src.length) + ' sites</span>');
-  if(x.bench!=null){
-    if(x.bench <= -8) b.push('<span class="badge badge-bench-under">' + x.bench + '% t.o.v. mediaan</span>');
-    else if(x.bench >= 8) b.push('<span class="badge badge-bench-over">+' + x.bench + '% t.o.v. mediaan</span>');
-  }
   if(x.dagen!=null) b.push('<span class="badge badge-days">' + x.dagen + ' dagen op de markt</span>');
   return b.join("");
 }
@@ -738,7 +778,7 @@ function card(x, id){
   if(x.afbeelding){
     var img = document.createElement("img");
     img.loading = "lazy";
-    img.alt = "";
+    img.alt = (x.titel || "Horecazaak") + (x.plaats ? " in " + x.plaats : "");
     img.src = x.afbeelding;
     img.addEventListener("error", showFallback);
     photoDiv.appendChild(img);
@@ -751,7 +791,7 @@ function card(x, id){
   body.className = "card-body";
   body.innerHTML =
       '<a class="card-title" href="#" data-open="' + id + '">' + esc(x.titel||"Horecazaak") + "</a>" +
-      '<div class="card-loc">' + esc(x.plaats||"") + (x.provincie? " · " + esc(x.provincie) : "") + "</div>" +
+      '<div class="card-loc">' + esc([x.plaats, x.provincie].filter(Boolean).join(" · ")) + "</div>" +
       '<div class="badge-row">' + badgesFor(x) + "</div>" +
       '<div class="card-actions">' +
         '<label><input type="checkbox" class="cmp-check" data-id="' + id + '" ' + (compareSet.has(id)?"checked":"") + '> vergelijk</label>' +
@@ -798,9 +838,48 @@ function renderGrid(){
   document.getElementById("empty-state").style.display = list.length? "none":"block";
   document.getElementById("load-more").style.display = list.length > SHOWN ? "block":"none";
   document.getElementById("result-count").textContent = list.length + " zaken gevonden";
+  updateFilterCounts(list.length);
 
   wireCards(grid);
 }
+
+/* mobiel filterpaneel: teller op de knop + "Toon N zaken" */
+function activeFilterCount(){
+  var s = state(), n = selCat.size + selProv.size;
+  if(s.van!=null || s.tm!=null) n++;
+  if(s.plaats) n++;
+  if(s.kw) n++;
+  return n;
+}
+function updateFilterCounts(total){
+  var n = activeFilterCount();
+  var badge = document.getElementById("filters-n");
+  if(badge){ badge.textContent = n; badge.hidden = n===0; }
+  var apply = document.getElementById("filters-apply-n");
+  if(apply) apply.textContent = total;
+}
+function setFiltersOpen(open){
+  var panel = document.getElementById("filters-panel");
+  var btn = document.getElementById("filters-toggle");
+  if(!panel || !btn) return;
+  panel.classList.toggle("open", open);
+  btn.setAttribute("aria-expanded", open ? "true":"false");
+  document.body.classList.toggle("filters-locked", open);
+  if(open) panel.scrollTop = 0;
+  else if(btn.offsetParent) btn.focus();
+}
+(function initFiltersPanel(){
+  var btn = document.getElementById("filters-toggle");
+  if(!btn) return;
+  btn.addEventListener("click", function(){ setFiltersOpen(btn.getAttribute("aria-expanded")!=="true"); });
+  document.getElementById("filters-close").addEventListener("click", function(){ setFiltersOpen(false); });
+  document.getElementById("filters-apply").addEventListener("click", function(){
+    setFiltersOpen(false);
+    document.getElementById("market").scrollIntoView({behavior:"smooth", block:"start"});
+  });
+  document.addEventListener("keydown", function(e){ if(e.key==="Escape") setFiltersOpen(false); });
+  window.matchMedia("(max-width:900px)").addEventListener("change", function(m){ if(!m.matches) setFiltersOpen(false); });
+})();
 
 function updateCompareBar(){
   var bar = document.getElementById("compare-bar");
@@ -1002,11 +1081,19 @@ function initSold(){
     grid.innerHTML = '<p style="color:var(--ink-dim);font-size:13.5px">De verkocht-detector draait mee sinds de laatste update — de eerste signaleringen verschijnen hier zodra zaken van de markt verdwijnen.</p>';
     return;
   }
-  grid.innerHTML = SOLD.map(function(x){
-    return '<div class="sold-card"><span class="tag">Verkocht · ' + (x.doorlooptijd_dagen!=null? x.doorlooptijd_dagen + " dagen" : "onbekend") + '</span>' +
-      "<h4>" + esc(x.titel||"") + "</h4>" +
-      "<p>" + esc(x.plaats||"") + "</p></div>";
+  // Alleen zaken met een naam als kaart; de rest (bron gaf geen titel mee) als één samenvattende regel.
+  var named = SOLD.filter(function(x){ return x.titel && x.titel.trim(); });
+  var rest = SOLD.length - named.length;
+  var html = named.map(function(x){
+    return '<div class="sold-card"><span class="tag">Verkocht · ' + (x.doorlooptijd_dagen!=null? x.doorlooptijd_dagen + " dagen te koop" : "doorlooptijd onbekend") + '</span>' +
+      "<h4>" + esc(x.titel) + "</h4>" +
+      "<p>" + esc([x.plaats, x.verdwenen_op ? "van de markt op " + x.verdwenen_op : ""].filter(Boolean).join(" · ")) + "</p></div>";
   }).join("");
+  if(rest){
+    html += '<p class="sold-note">' + (named.length ? "Daarnaast " : "") + rest + ' ' + (rest===1 ? "zaak is" : "zaken zijn") +
+      ' van de markt gehaald waarvan de bron geen naam meegaf.</p>';
+  }
+  grid.innerHTML = html;
 }
 
 function initProvBars(){
@@ -1041,13 +1128,31 @@ function initFaq(){
   });
 }
 
+function reducedMotion(){
+  return window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+}
+function animateNumber(el, target, delay){
+  target = target || 0;
+  if(reducedMotion() || !target){ el.textContent = target.toLocaleString("nl-NL"); return; }
+  window.setTimeout(function(){
+    var t0 = null, dur = 900;
+    function step(ts){
+      if(!t0) t0 = ts;
+      var p = Math.min((ts-t0)/dur, 1);
+      var eased = 1 - Math.pow(1-p, 3);
+      el.textContent = Math.round(eased*target).toLocaleString("nl-NL");
+      if(p<1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }, delay||0);
+}
 function initDynamic(){
   var verkocht = L.length ? 0 : 0;
   var verdwenenTotal = SOLD.length;
-  document.getElementById("scanline").textContent = SNAP || "–";
-  document.getElementById("hero-n").textContent = STATS.totaal || L.length;
-  document.getElementById("v-multi").textContent = STATS.multi_source || 0;
-  document.getElementById("v-verk").textContent = verdwenenTotal;
+  document.getElementById("hero-dateline").textContent = SNAP ? "Bijgewerkt op " + SNAP : "Bijgewerkt op –";
+  animateNumber(document.getElementById("hero-n"), STATS.totaal || L.length, 0);
+  animateNumber(document.getElementById("v-multi"), STATS.multi_source || 0, 120);
+  animateNumber(document.getElementById("v-verk"), verdwenenTotal, 240);
   document.getElementById("foot-snap").textContent = SNAP || "–";
   document.getElementById("foot-year").textContent = (SNAP ? SNAP.slice(0,4) : new Date().getFullYear());
 
@@ -1083,8 +1188,6 @@ function initSpotlight(){
 initDynamic();
 initTicker();
 initSold();
-initSpotlight();
-initProvBars();
 initFaq();
 renderAll();
 
@@ -1093,7 +1196,8 @@ renderAll();
   if(m) openModal(parseInt(m[1],10));
 })();
 
-})();
+};
+if(window.__hmReady) window.__hmStart();
 </script>
 </body>
 </html>
