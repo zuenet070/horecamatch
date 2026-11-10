@@ -215,12 +215,20 @@ button{font-family:inherit}
 
 /* verkocht */
 .sold-section{padding:48px 0;border-top:1px solid var(--line);background:var(--bg-alt)}
-.sold-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:14px;margin-top:20px}
+.sold-head{display:flex;justify-content:space-between;align-items:end;gap:16px;flex-wrap:wrap}
+.sold-stats{display:flex;gap:22px;font-size:13px;color:var(--ink-dim)}
+.sold-stats b{display:block;font-size:20px;color:var(--ink);font-variant-numeric:tabular-nums}
+.sold-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px;margin-top:20px}
+.sold-card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;display:flex;flex-direction:column}
+.sold-photo{position:relative;aspect-ratio:16/10;background:var(--bg-alt);overflow:hidden}
+.sold-photo img{width:100%;height:100%;object-fit:cover;display:block;filter:saturate(.75)}
+.sold-photo .tag{position:absolute;top:10px;left:10px;background:var(--good);color:#fff;font-size:11px;font-weight:800;padding:4px 9px;border-radius:4px}
+.sold-body{padding:12px 14px;display:flex;flex-direction:column;gap:4px}
+.sold-body h4{font-size:14px;margin:0;line-height:1.3}
+.sold-body .loc{font-size:12.5px;color:var(--ink-dim)}
+.sold-body .meta{font-size:12.5px;color:var(--ink);display:flex;gap:12px;flex-wrap:wrap;margin-top:4px}
+.sold-body .meta b{font-weight:700}
 .sold-note{grid-column:1 / -1;margin:0;font-size:13px;color:var(--ink-dim)}
-.sold-card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px}
-.sold-card .tag{display:inline-block;background:var(--good-soft);color:var(--good);font-size:11px;font-weight:800;padding:3px 8px;border-radius:999px;margin-bottom:8px}
-.sold-card h4{font-size:14px;margin:0 0 4px}
-.sold-card p{font-size:12.5px;color:var(--ink-dim);margin:0}
 
 /* alert cta — a slim bar, not a boxed-in marketing block */
 .cta{padding:0}
@@ -268,6 +276,31 @@ textarea.note{width:100%;border:1px solid var(--line);border-radius:8px;padding:
 .compare-table{width:100%;border-collapse:collapse;font-size:13px}
 .compare-table th,.compare-table td{border-bottom:1px solid var(--line);padding:8px 6px;text-align:left;vertical-align:top}
 .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+/* vragenlijst (zoekprofiel) */
+.alert-modal{max-width:560px}
+.alert-step{font-size:12.5px;color:var(--ink-dim);margin-top:4px}
+.alert-form{display:flex;flex-direction:column;gap:14px}
+.aq{border:none;margin:0;padding:0;min-width:0}
+.aq legend{font-size:16px;font-weight:700;padding:0;margin-bottom:4px}
+.aq-hint{font-size:13px;color:var(--ink-dim);margin:0 0 12px}
+.aq .chips{gap:8px}
+.aq .chip{padding:9px 14px;font-size:14px}
+.aq-radios{display:flex;flex-direction:column;gap:6px}
+.aq-radios label{display:flex;align-items:center;gap:10px;padding:11px 12px;border:1px solid var(--line);border-radius:8px;cursor:pointer;font-size:14.5px;background:var(--bg)}
+.aq-radios label:has(input:checked){border-color:var(--accent);background:var(--accent-soft)}
+.aq-radios input{accent-color:var(--accent)}
+.aq-field{display:flex;flex-direction:column;gap:5px;margin-top:12px}
+.aq-field span{font-size:12.5px;font-weight:600;color:var(--ink-dim)}
+.aq-field input{border:1px solid var(--line);border-radius:8px;padding:11px 12px;font-size:15px;font-family:inherit;background:#fff;color:#1d1a15}
+.aq-check{display:flex;gap:10px;align-items:flex-start;font-size:13.5px;margin-top:14px;color:var(--ink)}
+.aq-check input{margin-top:3px;accent-color:var(--accent)}
+.aq-summary{background:var(--bg-alt);border-radius:8px;padding:12px 14px;font-size:13.5px;line-height:1.6;margin-bottom:4px}
+.aq-summary b{font-weight:700}
+.aq-error{color:var(--bad);font-size:13px;margin:8px 0 0}
+.aq.done h4{font-size:17px;margin:0 0 6px}
+.aq.done p{margin:0 0 8px;font-size:14px}
+.alert-nav{display:flex;justify-content:space-between;gap:10px;padding-top:6px;border-top:1px solid var(--line)}
+.alert-nav .btn{min-width:110px;justify-content:center}
 </style>
 </head>
 <body>
@@ -282,7 +315,7 @@ textarea.note{width:100%;border:1px solid var(--line);border-radius:8px;padding:
       <a href="#faq">Vragen</a>
     </nav>
     <div class="topbar-actions">
-      <a href="#cta" class="btn btn-primary"><span class="btn-long">Ontvang alerts</span><span class="btn-short">Alerts</span></a>
+      <button type="button" class="btn btn-primary" data-open-alert><span class="btn-long">Ontvang alerts</span><span class="btn-short">Alerts</span></button>
       <button class="nav-toggle" id="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-mobile" aria-label="Menu openen">
         <span></span><span></span><span></span>
       </button>
@@ -487,8 +520,17 @@ textarea.note{width:100%;border:1px solid var(--line);border-radius:8px;padding:
 
   <section class="sold-section" id="verkocht">
     <div class="wrap">
-      <h2>Recent verkocht</h2>
-      <p style="color:var(--ink-dim);max-width:60ch">Zaken die van de markt zijn — een goed signaal voor hoe snel de markt in jouw regio beweegt. Iets wat andere aanbodsites niet laten zien.</p>
+      <div class="sold-head">
+        <div>
+          <h2>Recent van de markt</h2>
+          <p style="color:var(--ink-dim);max-width:60ch;margin:0">Zaken die uit het aanbod zijn verdwenen — vrijwel altijd verkocht of verhuurd. Dit houden andere aanbodsites niet bij.</p>
+        </div>
+        <div class="sold-stats">
+          <div><b id="s-30d">–</b>afgelopen 30 dagen</div>
+          <div><b id="s-tot">–</b>sinds de start</div>
+          <div><b id="s-med">–</b>mediane doorlooptijd</div>
+        </div>
+      </div>
       <div class="sold-grid" id="sold-grid"></div>
     </div>
   </section>
@@ -497,12 +539,9 @@ textarea.note{width:100%;border:1px solid var(--line);border-radius:8px;padding:
     <div class="wrap cta-bar">
       <div class="cta-text">
         <strong>Mis geen nieuwe zaak meer.</strong>
-        <span>Meld je aan voor een melding bij nieuw aanbod of een prijsdaling.</span>
+        <span>Vertel in vijf vragen wat je zoekt; je krijgt een melding bij nieuw aanbod of een prijsdaling dat erbij past.</span>
       </div>
-      <form class="cta-form" id="cta-form" aria-label="Alert aanmelden">
-        <input type="email" id="cta-email" placeholder="jouw@email.nl" aria-label="E-mailadres" required>
-        <button class="btn btn-primary" type="submit">Meld me aan</button>
-      </form>
+      <button class="btn btn-primary" type="button" data-open-alert>Zoekprofiel instellen</button>
     </div>
   </section>
 
@@ -532,6 +571,68 @@ textarea.note{width:100%;border:1px solid var(--line);border-radius:8px;padding:
       <button class="close-x" id="m-close" aria-label="Sluiten">✕</button>
     </div>
     <div class="modal-body" id="modal-body"></div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="alert-overlay" role="dialog" aria-modal="true" aria-labelledby="alert-title">
+  <div class="modal alert-modal">
+    <div class="modal-head">
+      <div>
+        <h3 id="alert-title">Waar zoek je naar?</h3>
+        <div class="alert-step" id="alert-step">Vraag 1 van 5</div>
+      </div>
+      <button class="close-x" id="a-close" aria-label="Sluiten">✕</button>
+    </div>
+    <form class="modal-body alert-form" id="alert-form" novalidate>
+      <fieldset class="aq" data-q="1">
+        <legend>Welk soort zaak zoek je?</legend>
+        <p class="aq-hint">Meerdere keuzes mogelijk. Niets kiezen = alles.</p>
+        <div class="chips" id="aq-cat"></div>
+      </fieldset>
+      <fieldset class="aq" data-q="2" hidden>
+        <legend>In welke regio?</legend>
+        <p class="aq-hint">Kies een of meer provincies, of vul een plaats in.</p>
+        <div class="chips" id="aq-prov"></div>
+        <label class="aq-field"><span>Of een specifieke plaats</span><input type="text" id="aq-plaats" list="plaatsen-list" placeholder="Bijv. Haarlem"></label>
+      </fieldset>
+      <fieldset class="aq" data-q="3" hidden>
+        <legend>Wat is je budget voor de overname?</legend>
+        <p class="aq-hint">Inventaris en goodwill; het pand huur je meestal.</p>
+        <div class="aq-radios" id="aq-budget">
+          <label><input type="radio" name="budget" value="50000"> tot € 50.000</label>
+          <label><input type="radio" name="budget" value="100000"> tot € 100.000</label>
+          <label><input type="radio" name="budget" value="200000"> tot € 200.000</label>
+          <label><input type="radio" name="budget" value="400000"> tot € 400.000</label>
+          <label><input type="radio" name="budget" value="" checked> geen maximum</label>
+        </div>
+      </fieldset>
+      <fieldset class="aq" data-q="4" hidden>
+        <legend>Hoe groot moet de zaak zijn?</legend>
+        <p class="aq-hint">Minimaal aantal zitplaatsen, binnen en terras samen.</p>
+        <div class="aq-radios" id="aq-zit">
+          <label><input type="radio" name="zit" value="" checked> maakt niet uit</label>
+          <label><input type="radio" name="zit" value="20"> 20 of meer</label>
+          <label><input type="radio" name="zit" value="50"> 50 of meer</label>
+          <label><input type="radio" name="zit" value="100"> 100 of meer</label>
+        </div>
+      </fieldset>
+      <fieldset class="aq" data-q="5" hidden>
+        <legend>Waar mogen we de meldingen naartoe sturen?</legend>
+        <div class="aq-summary" id="aq-summary"></div>
+        <label class="aq-field"><span>E-mailadres</span><input type="email" id="aq-email" placeholder="jouw@email.nl" required autocomplete="email"></label>
+        <label class="aq-check"><input type="checkbox" id="aq-ok" required> Ik wil meldingen ontvangen die bij dit profiel passen. Afmelden kan altijd.</label>
+        <p class="aq-error" id="aq-error" hidden></p>
+      </fieldset>
+      <div class="aq done" id="aq-done" hidden>
+        <h4>Je zoekprofiel staat klaar.</h4>
+        <p>Je mailprogramma opent met je profiel ingevuld; druk daar op verzenden en we zetten de melding aan. Gebeurt er niets? Mail je profiel naar <a href="mailto:info@horecamatch.nl">info@horecamatch.nl</a>.</p>
+        <p class="aq-hint">We hebben het aanbod hieronder alvast gefilterd op jouw profiel.</p>
+      </div>
+      <div class="alert-nav">
+        <button type="button" class="btn btn-ghost" id="aq-back">Terug</button>
+        <button type="button" class="btn btn-primary" id="aq-next">Volgende</button>
+      </div>
+    </form>
   </div>
 </div>
 
@@ -1068,18 +1169,112 @@ function goToMarket(plaats, cat){
   });
 })();
 
-/* ---------------- alert-aanmelding (mailto, geen backend) ---------------- */
-var ctaForm = document.getElementById("cta-form");
-if(ctaForm){
-  ctaForm.addEventListener("submit", function(ev){
-    ev.preventDefault();
-    var email = document.getElementById("cta-email").value.trim();
-    if(!email) return;
-    var subject = "Aanmelding voor horeca-alerts";
-    var body = "Meld dit e-mailadres aan voor meldingen bij nieuw aanbod en prijsdalingen: " + email;
-    window.location.href = "mailto:info@horecamatch.nl?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(body);
+/* ---------------- zoekprofiel-vragenlijst (alerts) ----------------
+   Vijf vragen -> profiel. Nog geen backend: het profiel gaat als mail naar
+   info@horecamatch.nl en wordt lokaal bewaard (hm_profile), en het aanbod
+   wordt er meteen op gefilterd. */
+var AQ = { step: 1, cat: new Set(), prov: new Set() };
+var AQ_TITLES = {1:"Waar zoek je naar?", 2:"Waar wil je ondernemen?", 3:"Wat mag het kosten?", 4:"Hoe groot?", 5:"Bijna klaar"};
+
+function aqChips(box, items, set, label){
+  box.innerHTML = "";
+  items.forEach(function(v){
+    var chip = document.createElement("button");
+    chip.type = "button"; chip.className = "chip";
+    chip.setAttribute("aria-pressed", set.has(v) ? "true":"false");
+    chip.textContent = label ? label(v) : v;
+    chip.addEventListener("click", function(){
+      if(set.has(v)) set.delete(v); else set.add(v);
+      chip.setAttribute("aria-pressed", set.has(v) ? "true":"false");
+    });
+    box.appendChild(chip);
   });
 }
+function aqProfile(){
+  var budget = (document.querySelector('input[name="budget"]:checked')||{}).value || "";
+  var zit = (document.querySelector('input[name="zit"]:checked')||{}).value || "";
+  return {
+    cat: Array.from(AQ.cat), prov: Array.from(AQ.prov),
+    plaats: document.getElementById("aq-plaats").value.trim(),
+    budget: budget ? parseInt(budget,10) : null,
+    zit: zit ? parseInt(zit,10) : null,
+    email: document.getElementById("aq-email").value.trim()
+  };
+}
+function aqSummaryText(pf){
+  var parts = [];
+  parts.push("<b>Soort:</b> " + (pf.cat.length ? pf.cat.map(function(c){return CATLABEL[c]||c;}).join(", ") : "alle soorten"));
+  parts.push("<b>Regio:</b> " + (pf.plaats ? esc(pf.plaats) : (pf.prov.length ? pf.prov.map(esc).join(", ") : "heel Nederland")));
+  parts.push("<b>Budget:</b> " + (pf.budget ? "tot " + fmtEUR(pf.budget) : "geen maximum"));
+  parts.push("<b>Grootte:</b> " + (pf.zit ? pf.zit + "+ zitplaatsen" : "maakt niet uit"));
+  return parts.join("<br>");
+}
+function aqShow(step){
+  AQ.step = step;
+  document.querySelectorAll("#alert-form .aq[data-q]").forEach(function(f){ f.hidden = parseInt(f.getAttribute("data-q"),10) !== step; });
+  document.getElementById("aq-done").hidden = step !== 6;
+  document.getElementById("alert-title").textContent = step === 6 ? "Gelukt" : AQ_TITLES[step];
+  document.getElementById("alert-step").textContent = step === 6 ? "" : "Vraag " + step + " van 5";
+  document.getElementById("aq-back").style.visibility = (step === 1 || step === 6) ? "hidden" : "visible";
+  var next = document.getElementById("aq-next");
+  next.textContent = step === 5 ? "Zet melding aan" : (step === 6 ? "Sluiten" : "Volgende");
+  if(step === 5) document.getElementById("aq-summary").innerHTML = aqSummaryText(aqProfile());
+  document.getElementById("aq-error").hidden = true;
+}
+function openAlert(){
+  // voorvullen met de actieve filters
+  AQ.cat = new Set(selCat); AQ.prov = new Set(selProv);
+  document.getElementById("aq-plaats").value = document.getElementById("plaats-input").value.trim();
+  var tm = parsePrijs(document.getElementById("prijs-tm").value);
+  var radios = Array.prototype.slice.call(document.querySelectorAll('input[name="budget"]'));
+  var pick = radios.filter(function(r){ return r.value && tm && parseInt(r.value,10) >= tm; })[0] || radios.filter(function(r){ return r.value === ""; })[0];
+  radios.forEach(function(r){ r.checked = (r === pick); });
+  document.querySelectorAll('input[name="zit"]').forEach(function(r){ r.checked = (r.value === ""); });
+  document.getElementById("aq-email").value = ""; document.getElementById("aq-ok").checked = false;
+  aqChips(document.getElementById("aq-cat"), CATORDER, AQ.cat, function(c){ return CATLABEL[c]; });
+  aqChips(document.getElementById("aq-prov"), PROVN, AQ.prov);
+  aqShow(1);
+  document.getElementById("alert-overlay").classList.add("open");
+  document.getElementById("a-close").focus();
+}
+function closeAlert(){ document.getElementById("alert-overlay").classList.remove("open"); }
+function aqApplyToFilters(pf){
+  selCat = new Set(pf.cat); selProv = new Set(pf.prov);
+  document.getElementById("plaats-input").value = pf.plaats || "";
+  document.getElementById("prijs-tm").value = pf.budget ? String(pf.budget) : "";
+  SHOWN = 24; renderAll();
+}
+function aqSubmit(){
+  var pf = aqProfile();
+  var err = document.getElementById("aq-error");
+  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(pf.email)){ err.textContent = "Vul een geldig e-mailadres in."; err.hidden = false; return; }
+  if(!document.getElementById("aq-ok").checked){ err.textContent = "Vink aan dat je meldingen wilt ontvangen."; err.hidden = false; return; }
+  try { localStorage.setItem("hm_profile", JSON.stringify(pf)); } catch(e){}
+  var body = "Zoekprofiel HorecaMatch\n\n" +
+    "Soort: " + (pf.cat.length ? pf.cat.map(function(c){return CATLABEL[c]||c;}).join(", ") : "alle") + "\n" +
+    "Regio: " + (pf.plaats || (pf.prov.length ? pf.prov.join(", ") : "heel Nederland")) + "\n" +
+    "Budget: " + (pf.budget ? "tot " + fmtEUR(pf.budget) : "geen maximum") + "\n" +
+    "Zitplaatsen: " + (pf.zit ? pf.zit + "+" : "n.v.t.") + "\n" +
+    "E-mail: " + pf.email + "\n";
+  window.location.href = "mailto:info@horecamatch.nl?subject=" + encodeURIComponent("Zoekprofiel: " + pf.email) + "&body=" + encodeURIComponent(body);
+  aqApplyToFilters(pf);
+  aqShow(6);
+}
+(function initAlert(){
+  var ov = document.getElementById("alert-overlay");
+  if(!ov) return;
+  document.querySelectorAll("[data-open-alert]").forEach(function(b){ b.addEventListener("click", openAlert); });
+  document.getElementById("a-close").addEventListener("click", closeAlert);
+  ov.addEventListener("click", function(e){ if(e.target === ov) closeAlert(); });
+  document.getElementById("aq-back").addEventListener("click", function(){ if(AQ.step > 1 && AQ.step < 6) aqShow(AQ.step - 1); });
+  document.getElementById("aq-next").addEventListener("click", function(){
+    if(AQ.step === 6){ closeAlert(); document.getElementById("market").scrollIntoView({behavior:"smooth", block:"start"}); return; }
+    if(AQ.step < 5){ aqShow(AQ.step + 1); return; }
+    aqSubmit();
+  });
+  document.getElementById("alert-form").addEventListener("submit", function(e){ e.preventDefault(); document.getElementById("aq-next").click(); });
+  document.addEventListener("keydown", function(e){ if(e.key === "Escape") closeAlert(); });
+})();
 
 document.getElementById("hero-search").addEventListener("submit", function(ev){
   ev.preventDefault();
@@ -1109,23 +1304,39 @@ function initTicker(){
 
 function initSold(){
   var grid = document.getElementById("sold-grid");
+  var st = STATS || {};
+  var set = function(id, v){ var el = document.getElementById(id); if(el) el.textContent = v; };
+  set("s-30d", st.verkocht_30d != null ? st.verkocht_30d : "–");
+  set("s-tot", st.verkocht_totaal != null ? st.verkocht_totaal.toLocaleString("nl-NL") : "–");
+  set("s-med", st.mediane_looptijd ? st.mediane_looptijd + " dgn" : "–");
+  var statsBox = document.querySelector(".sold-stats");
+  if(statsBox && st.verkocht_totaal == null) statsBox.hidden = true;
   if(!SOLD.length){
-    grid.innerHTML = '<p style="color:var(--ink-dim);font-size:13.5px">De verkocht-detector draait mee sinds de laatste update — de eerste signaleringen verschijnen hier zodra zaken van de markt verdwijnen.</p>';
+    grid.innerHTML = '<p class="sold-note">De verkocht-detector draait mee sinds de laatste update — de eerste signaleringen verschijnen hier zodra zaken van de markt verdwijnen.</p>';
     return;
   }
-  // Alleen zaken met een naam als kaart; de rest (bron gaf geen titel mee) als één samenvattende regel.
-  var named = SOLD.filter(function(x){ return x.titel && x.titel.trim(); });
-  var rest = SOLD.length - named.length;
-  var html = named.map(function(x){
-    return '<div class="sold-card"><span class="tag">Verkocht · ' + (x.doorlooptijd_dagen!=null? x.doorlooptijd_dagen + " dagen te koop" : "doorlooptijd onbekend") + '</span>' +
-      "<h4>" + esc(x.titel) + "</h4>" +
-      "<p>" + esc([x.plaats, x.verdwenen_op ? "van de markt op " + x.verdwenen_op : ""].filter(Boolean).join(" · ")) + "</p></div>";
-  }).join("");
-  if(rest){
-    html += '<p class="sold-note">' + (named.length ? "Daarnaast " : "") + rest + ' ' + (rest===1 ? "zaak is" : "zaken zijn") +
-      ' van de markt gehaald waarvan de bron geen naam meegaf.</p>';
+  function fmtDate(d){
+    if(!d) return "";
+    var m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(d);
+    if(!m) return d;
+    var mnd = ["jan","feb","mrt","apr","mei","jun","jul","aug","sep","okt","nov","dec"];
+    return parseInt(m[3],10) + " " + mnd[parseInt(m[2],10)-1];
   }
-  grid.innerHTML = html;
+  grid.innerHTML = SOLD.filter(function(x){ return x.titel; }).slice(0, 8).map(function(x){
+    var photo = x.afbeelding
+      ? '<img src="' + esc(x.afbeelding) + '" alt="" loading="lazy" onerror="this.remove()">'
+      : '';
+    var meta = [];
+    if(x.prijs) meta.push('<span><b>' + esc(fmtEUR(x.prijs)) + '</b> vraagprijs</span>');
+    if(x.doorlooptijd_dagen) meta.push('<span><b>' + x.doorlooptijd_dagen + '</b> dagen te koop</span>');
+    return '<article class="sold-card">' +
+      '<div class="sold-photo">' + photo + '<span class="tag">Van de markt · ' + esc(fmtDate(x.verdwenen_op)) + '</span></div>' +
+      '<div class="sold-body">' +
+        '<h4>' + esc(x.titel) + '</h4>' +
+        '<div class="loc">' + esc([x.plaats, x.provincie].filter(Boolean).join(" · ")) + (x.bron ? ' · via ' + esc(x.bron) : '') + '</div>' +
+        (meta.length ? '<div class="meta">' + meta.join("") + '</div>' : '') +
+      '</div></article>';
+  }).join("");
 }
 
 function initProvBars(){
@@ -1145,7 +1356,7 @@ function initFaq(){
     ["Hoe vaak wordt de site bijgewerkt?", "Elke ochtend automatisch. Nieuw aanbod, prijswijzigingen en verkopen worden dan verwerkt."],
     ["Hoe werkt de verkocht-detectie?", "Als een zaak niet meer in het aanbod van een bron voorkomt terwijl die bron zelf wel succesvol is gescand, markeren we hem als vermoedelijk verkocht en berekenen we hoeveel dagen hij te koop stond."],
     ["Wat betekent 'onderhandelingsruimte'?", "Een inschatting op basis van hoe lang een zaak al te koop staat en of de vraagprijs al eens is verlaagd. Geen garantie, wel een handig startpunt voor een gesprek."],
-    ["Kan ik ook een melding per mail krijgen?", 'Automatische aanmelding via de site komt eraan. Vul tot die tijd je e-mailadres in bij "Ontvang alerts" bovenaan, of mail naar <a href="mailto:info@horecamatch.nl" style="color:inherit">info@horecamatch.nl</a> om een zoekprofiel handmatig te laten instellen.']
+    ["Kan ik ook een melding per mail krijgen?", 'Ja. Klik op "Ontvang alerts" en beantwoord vijf korte vragen (soort zaak, regio, budget, grootte, e-mail). Je krijgt dan een mail zodra er aanbod bijkomt of een prijs daalt dat bij jouw profiel past.']
   ];
   document.getElementById("faq-list").innerHTML = items.map(function(it,i){
     return '<div class="faq-item" data-idx="' + i + '"><button class="faq-q" aria-expanded="false">' + esc(it[0]) + '<span class="chevron" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span></button><div class="faq-a">' + it[1] + "</div></div>";
@@ -1179,8 +1390,7 @@ function animateNumber(el, target, delay){
   }, delay||0);
 }
 function initDynamic(){
-  var verkocht = L.length ? 0 : 0;
-  var verdwenenTotal = SOLD.length;
+  var verdwenenTotal = STATS.verkocht_totaal != null ? STATS.verkocht_totaal : SOLD.length;
   document.getElementById("hero-dateline").textContent = SNAP ? "Bijgewerkt op " + SNAP : "Bijgewerkt op –";
   animateNumber(document.getElementById("hero-n"), STATS.totaal || L.length, 0);
   animateNumber(document.getElementById("v-multi"), STATS.multi_source || 0, 120);
