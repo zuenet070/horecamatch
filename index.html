@@ -886,6 +886,10 @@ function card(x, id){
 
   var photoDiv = document.createElement("div");
   photoDiv.className = "card-photo";
+  if(x.pagina){
+    photoDiv.style.cursor = "pointer";
+    photoDiv.addEventListener("click", function(ev){ if(!ev.target.closest("a,button,label,input")) location.href = x.pagina; });
+  }
 
   function showFallback(){
     photoDiv.innerHTML = "";
@@ -919,7 +923,7 @@ function card(x, id){
   var loc = [x.plaats, x.provincie].filter(Boolean).join(" · ");
   var badges = badgesFor(x);
   body.innerHTML =
-      '<a class="card-title" href="#" data-open="' + id + '">' + esc(x.titel||"Horecazaak") + "</a>" +
+      '<a class="card-title" href="' + (x.pagina ? esc(x.pagina) : "#") + '" data-open="' + id + '">' + esc(x.titel||"Horecazaak") + "</a>" +
       (loc ? '<div class="card-loc">' + esc(loc) + "</div>" : "") +
       '<div class="card-price-row">' + priceRow(x) + (badges ? '<span class="badge-row">' + badges + '</span>' : '') + "</div>" +
       '<div class="card-facts">' + factsFor(x) + "</div>" +
@@ -952,6 +956,7 @@ function wireCards(container){
   });
   container.querySelectorAll("[data-open]").forEach(function(a){
     a.addEventListener("click", function(ev){
+      if(a.getAttribute("href") !== "#") return; /* heeft eigen detailpagina */
       ev.preventDefault();
       openModal(parseInt(a.getAttribute("data-open"),10));
     });
@@ -1295,10 +1300,10 @@ function initTicker(){
     .slice(0,6);
   var ul = document.getElementById("tick");
   ul.innerHTML = recent.map(function(x){
-    return "<li><a href=\"#\" data-open2=\"" + L.indexOf(x) + "\">" + esc(x.titel||"") + "</a><br><span class=\"meta\">" + esc(x.plaats||"") + " · " + esc(x.geplaatst||"") + "</span></li>";
+    return "<li><a href=\"" + (x.pagina ? esc(x.pagina) : "#") + "\" data-open2=\"" + L.indexOf(x) + "\">" + esc(x.titel||"") + "</a><br><span class=\"meta\">" + esc(x.plaats||"") + " · " + esc(x.geplaatst||"") + "</span></li>";
   }).join("");
   ul.querySelectorAll("[data-open2]").forEach(function(a){
-    a.addEventListener("click", function(ev){ ev.preventDefault(); openModal(parseInt(a.getAttribute("data-open2"),10)); });
+    a.addEventListener("click", function(ev){ if(a.getAttribute("href") !== "#") return; ev.preventDefault(); openModal(parseInt(a.getAttribute("data-open2"),10)); });
   });
 }
 
@@ -1436,6 +1441,14 @@ renderAll();
 (function initHashOpen(){
   var m = /^#open=(\d+)$/.exec(location.hash);
   if(m) openModal(parseInt(m[1],10));
+  var sp = new URLSearchParams(location.search);
+  if(sp.get("alert") === "1") setTimeout(openAlert, 300);
+  var q = (sp.get("q") || "").trim();
+  if(q){
+    var hp = document.getElementById("hero-plaats");
+    if(hp) hp.value = q;
+    goToMarket(q, "");
+  }
 })();
 
 };
