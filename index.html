@@ -297,6 +297,30 @@ textarea.note{width:100%;border:1px solid var(--line);border-radius:8px;padding:
 .aq-summary{background:var(--bg-alt);border-radius:8px;padding:12px 14px;font-size:13.5px;line-height:1.6;margin-bottom:4px}
 .aq-summary b{font-weight:700}
 .aq-error{color:var(--bad);font-size:13px;margin:8px 0 0}
+.aq-sub{font-size:13px;font-weight:700;margin:18px 0 8px;color:var(--ink)}
+.aq legend + .aq-sub{margin-top:10px}
+.aq-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.aq-row .aq-field{margin-top:0}
+.aq-money{position:relative;display:block}
+.aq-money i{position:absolute;left:12px;top:50%;transform:translateY(-50%);font-style:normal;color:var(--ink-dim);font-size:15px;pointer-events:none}
+.aq-money input{width:100%;padding-left:28px}
+.aq-unit input{width:100%}
+.aq-presets{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.aq-presets button{border:1px solid var(--line);background:var(--bg);color:var(--ink);border-radius:999px;padding:7px 12px;font-size:13px;font-family:inherit;cursor:pointer}
+.aq-presets button:hover,.aq-presets button[aria-pressed="true"]{border-color:var(--accent);background:var(--accent-soft)}
+.aq-radios-row{flex-direction:row;flex-wrap:wrap}
+.aq-radios-row label{padding:9px 14px}
+.aq-checks{display:flex;flex-direction:column;gap:6px}
+.aq-checks label{display:flex;align-items:center;gap:10px;padding:11px 12px;border:1px solid var(--line);border-radius:8px;cursor:pointer;font-size:14.5px;background:var(--bg)}
+.aq-checks label:has(input:checked){border-color:var(--accent);background:var(--accent-soft)}
+.aq-checks input{accent-color:var(--accent)}
+.aq-onb{margin-top:16px;padding:12px;border-radius:8px;background:var(--bg-alt);font-size:13.5px}
+.aq-body{max-height:calc(100vh - 220px);overflow-y:auto}
+.pf-bar{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;background:var(--accent-soft);border:1px solid var(--line);border-radius:8px;padding:10px 14px;margin:0 0 14px;font-size:13.5px}
+.pf-bar[hidden]{display:none}
+.pf-bar b{font-weight:700}
+.pf-bar .btn{padding:7px 12px;font-size:13px}
+@media(max-width:520px){.aq-row{grid-template-columns:1fr}}
 .aq.done h4{font-size:17px;margin:0 0 6px}
 .aq.done p{margin:0 0 8px;font-size:14px}
 .alert-nav{display:flex;justify-content:space-between;gap:10px;padding-top:6px;border-top:1px solid var(--line)}
@@ -510,6 +534,7 @@ textarea.note{width:100%;border:1px solid var(--line);border-radius:8px;padding:
               <button class="btn btn-ghost" id="compare-btn" type="button">Vergelijk geselecteerde (<span id="compare-n">0</span>)</button>
             </div>
           </div>
+          <div class="pf-bar" id="pf-bar" hidden><span id="pf-bar-text"></span><button type="button" class="btn btn-ghost" id="pf-clear">Zoekprofiel wissen</button></div>
           <div class="grid" id="card-grid" aria-live="polite"></div>
           <div id="empty-state" class="empty-state" style="display:none">Geen zaken gevonden met deze filters. Probeer een breder budget of minder filters.</div>
           <button class="load-more" id="load-more" type="button" style="display:none">Meer tonen</button>
@@ -579,7 +604,7 @@ textarea.note{width:100%;border:1px solid var(--line);border-radius:8px;padding:
     <div class="modal-head">
       <div>
         <h3 id="alert-title">Waar zoek je naar?</h3>
-        <div class="alert-step" id="alert-step">Vraag 1 van 5</div>
+        <div class="alert-step" id="alert-step">Vraag 1 van 6</div>
       </div>
       <button class="close-x" id="a-close" aria-label="Sluiten">✕</button>
     </div>
@@ -588,38 +613,73 @@ textarea.note{width:100%;border:1px solid var(--line);border-radius:8px;padding:
         <legend>Welk soort zaak zoek je?</legend>
         <p class="aq-hint">Meerdere keuzes mogelijk. Niets kiezen = alles.</p>
         <div class="chips" id="aq-cat"></div>
+        <p class="aq-sub">Wat voor concept of keuken? <span style="font-weight:400;color:var(--ink-dim)">(optioneel)</span></p>
+        <div class="chips" id="aq-kk"></div>
       </fieldset>
       <fieldset class="aq" data-q="2" hidden>
-        <legend>In welke regio?</legend>
-        <p class="aq-hint">Kies een of meer provincies, of vul een plaats in.</p>
+        <legend>Waar wil je ondernemen?</legend>
+        <p class="aq-hint">Kies een of meer provincies, of vul een of meer plaatsen in.</p>
         <div class="chips" id="aq-prov"></div>
-        <label class="aq-field"><span>Of een specifieke plaats</span><input type="text" id="aq-plaats" list="plaatsen-list" placeholder="Bijv. Haarlem"></label>
+        <label class="aq-field"><span>Of specifieke plaatsen (met een komma ertussen)</span><input type="text" id="aq-plaats" list="plaatsen-list" placeholder="Bijv. Haarlem, Amsterdam" autocomplete="off"></label>
       </fieldset>
       <fieldset class="aq" data-q="3" hidden>
         <legend>Wat is je budget voor de overname?</legend>
-        <p class="aq-hint">Inventaris en goodwill; het pand huur je meestal.</p>
-        <div class="aq-radios" id="aq-budget">
-          <label><input type="radio" name="budget" value="50000"> tot € 50.000</label>
-          <label><input type="radio" name="budget" value="100000"> tot € 100.000</label>
-          <label><input type="radio" name="budget" value="200000"> tot € 200.000</label>
-          <label><input type="radio" name="budget" value="400000"> tot € 400.000</label>
-          <label><input type="radio" name="budget" value="" checked> geen maximum</label>
+        <p class="aq-hint">Inventaris en goodwill; het pand huur je meestal. Vul van en tot in, bijvoorbeeld 100.000 tot 200.000.</p>
+        <div class="aq-row">
+          <label class="aq-field"><span>Van</span><span class="aq-money"><i>€</i><input type="text" id="aq-pvan" inputmode="numeric" placeholder="0" autocomplete="off"></span></label>
+          <label class="aq-field"><span>Tot</span><span class="aq-money"><i>€</i><input type="text" id="aq-ptm" inputmode="numeric" placeholder="geen maximum" autocomplete="off"></span></label>
+        </div>
+        <div class="aq-presets" id="aq-pre-prijs">
+          <button type="button" data-van="" data-tm="50000">tot € 50.000</button>
+          <button type="button" data-van="50000" data-tm="100000">€ 50.000 – 100.000</button>
+          <button type="button" data-van="100000" data-tm="200000">€ 100.000 – 200.000</button>
+          <button type="button" data-van="200000" data-tm="400000">€ 200.000 – 400.000</button>
+          <button type="button" data-van="400000" data-tm="">€ 400.000+</button>
         </div>
       </fieldset>
       <fieldset class="aq" data-q="4" hidden>
-        <legend>Hoe groot moet de zaak zijn?</legend>
-        <p class="aq-hint">Minimaal aantal zitplaatsen, binnen en terras samen.</p>
-        <div class="aq-radios" id="aq-zit">
+        <legend>Hoe groot en wat mag het pand kosten?</legend>
+        <p class="aq-sub">Oppervlakte</p>
+        <div class="aq-row">
+          <label class="aq-field aq-unit"><span>Minimaal (m²)</span><input type="text" id="aq-m2van" inputmode="numeric" placeholder="bijv. 80" autocomplete="off"></label>
+          <label class="aq-field aq-unit"><span>Maximaal (m²)</span><input type="text" id="aq-m2tm" inputmode="numeric" placeholder="bijv. 250" autocomplete="off"></label>
+        </div>
+        <p class="aq-sub">Huur van het pand per maand</p>
+        <label class="aq-field" style="margin-top:0"><span>Maximaal</span><span class="aq-money"><i>€</i><input type="text" id="aq-huur" inputmode="numeric" placeholder="geen maximum" autocomplete="off"></span></label>
+        <div class="aq-presets" id="aq-pre-huur">
+          <button type="button" data-v="2500">tot € 2.500</button>
+          <button type="button" data-v="5000">tot € 5.000</button>
+          <button type="button" data-v="7500">tot € 7.500</button>
+          <button type="button" data-v="10000">tot € 10.000</button>
+        </div>
+        <p class="aq-sub">Zitplaatsen, binnen en terras samen</p>
+        <div class="aq-radios aq-radios-row" id="aq-zit">
           <label><input type="radio" name="zit" value="" checked> maakt niet uit</label>
-          <label><input type="radio" name="zit" value="20"> 20 of meer</label>
-          <label><input type="radio" name="zit" value="50"> 50 of meer</label>
-          <label><input type="radio" name="zit" value="100"> 100 of meer</label>
+          <label><input type="radio" name="zit" value="20"> 20+</label>
+          <label><input type="radio" name="zit" value="50"> 50+</label>
+          <label><input type="radio" name="zit" value="100"> 100+</label>
         </div>
       </fieldset>
       <fieldset class="aq" data-q="5" hidden>
+        <legend>Wat moet erbij zitten?</legend>
+        <p class="aq-hint">Vergunningen en extra's. Niets aanvinken = geen eisen.</p>
+        <div class="aq-checks" id="aq-vg"></div>
+        <div class="aq-checks" style="margin-top:6px">
+          <label><input type="checkbox" id="aq-ter"> Met terras</label>
+          <label><input type="checkbox" id="aq-wo"> Met woonruimte boven of bij de zaak</label>
+        </div>
+        <label class="aq-check aq-onb"><input type="checkbox" id="aq-onb" checked> Toon ook zaken waarvan dit nog niet bekend is. Niet elke advertentie vermeldt oppervlakte, huur of vergunningen, dus zonder dit vinkje valt je aanbod flink kleiner uit.</label>
+      </fieldset>
+      <fieldset class="aq" data-q="6" hidden>
         <legend>Waar mogen we de meldingen naartoe sturen?</legend>
         <div class="aq-summary" id="aq-summary"></div>
         <label class="aq-field"><span>E-mailadres</span><input type="email" id="aq-email" placeholder="jouw@email.nl" required autocomplete="email"></label>
+        <p class="aq-sub">Hoe vaak?</p>
+        <div class="aq-radios aq-radios-row" id="aq-freq">
+          <label><input type="radio" name="freq" value="direct"> Direct bij een nieuwe zaak</label>
+          <label><input type="radio" name="freq" value="dag" checked> Eén keer per dag</label>
+          <label><input type="radio" name="freq" value="week"> Eén keer per week</label>
+        </div>
         <label class="aq-check"><input type="checkbox" id="aq-ok" required> Ik wil meldingen ontvangen die bij dit profiel passen. Afmelden kan altijd.</label>
         <p class="aq-error" id="aq-error" hidden></p>
       </fieldset>
@@ -768,6 +828,7 @@ function matches(x, s, skip){
     var hay2 = fold((x.titel||"") + " " + (x.straat||"") + " " + (x.plaats||""));
     if(hay2.indexOf(s.kw)===-1) return false;
   }
+  if(PF && !pfMatch(x)) return false;
   return true;
 }
 
@@ -977,6 +1038,7 @@ function renderGrid(){
   document.getElementById("load-more").style.display = list.length > SHOWN ? "block":"none";
   document.getElementById("result-count").textContent = list.length + " zaken gevonden";
   updateFilterCounts(list.length);
+  updatePfBar();
 
   wireCards(grid);
 }
@@ -1178,8 +1240,14 @@ function goToMarket(plaats, cat){
    Vijf vragen -> profiel. Nog geen backend: het profiel gaat als mail naar
    info@horecamatch.nl en wordt lokaal bewaard (hm_profile), en het aanbod
    wordt er meteen op gefilterd. */
-var AQ = { step: 1, cat: new Set(), prov: new Set() };
-var AQ_TITLES = {1:"Waar zoek je naar?", 2:"Waar wil je ondernemen?", 3:"Wat mag het kosten?", 4:"Hoe groot?", 5:"Bijna klaar"};
+var AQ_N = 6, AQ_DONE = 7;
+var AQ = { step: 1, cat: new Set(), prov: new Set(), kk: new Set(), vg: new Set() };
+var AQ_TITLES = {1:"Waar zoek je naar?", 2:"Waar wil je ondernemen?", 3:"Wat mag het kosten?", 4:"Het pand", 5:"Wat moet erbij zitten?", 6:"Bijna klaar"};
+var KK_ORDER = ["italiaans","aziatisch","grieks","grill","tapas","burger","pannenkoek","brasserie","lunch"];
+var KK_LABEL = {italiaans:"Italiaans / pizza", aziatisch:"Aziatisch / sushi", grieks:"Grieks / Turks / Midden-Oosten", grill:"Steakhouse / grill", tapas:"Tapas / Spaans / Mexicaans", burger:"Burger / snack / friet", pannenkoek:"Pannenkoeken", brasserie:"Brasserie / bistro / fine dining", lunch:"Lunch / koffie / bakkerij"};
+var VG_ORDER = ["drank","exploitatie","laat"];
+var VG_LABEL = {drank:"Drank- en horecavergunning", exploitatie:"Exploitatievergunning", laat:"Ruime sluitingstijden / nachtvergunning"};
+var PF = null; /* actief zoekprofiel (filtert het aanbod); null = geen */
 
 function aqChips(box, items, set, label){
   box.innerHTML = "";
@@ -1195,58 +1263,135 @@ function aqChips(box, items, set, label){
     box.appendChild(chip);
   });
 }
+function aqVinkjes(box, items, set, label){
+  box.innerHTML = "";
+  items.forEach(function(v){
+    var l = document.createElement("label");
+    var cb = document.createElement("input"); cb.type = "checkbox"; cb.checked = set.has(v);
+    cb.addEventListener("change", function(){ if(cb.checked) set.add(v); else set.delete(v); });
+    l.appendChild(cb); l.appendChild(document.createTextNode(" " + label(v)));
+    box.appendChild(l);
+  });
+}
+function aqVal(id){ return document.getElementById(id).value; }
 function aqProfile(){
-  var budget = (document.querySelector('input[name="budget"]:checked')||{}).value || "";
   var zit = (document.querySelector('input[name="zit"]:checked')||{}).value || "";
+  var freq = (document.querySelector('input[name="freq"]:checked')||{}).value || "dag";
+  var van = parsePrijs(aqVal("aq-pvan")), tm = parsePrijs(aqVal("aq-ptm"));
+  if(van!=null && tm!=null && van > tm){ var t = van; van = tm; tm = t; }
+  var m1 = parsePrijs(aqVal("aq-m2van")), m2 = parsePrijs(aqVal("aq-m2tm"));
+  if(m1!=null && m2!=null && m1 > m2){ var t2 = m1; m1 = m2; m2 = t2; }
   return {
-    cat: Array.from(AQ.cat), prov: Array.from(AQ.prov),
-    plaats: document.getElementById("aq-plaats").value.trim(),
-    budget: budget ? parseInt(budget,10) : null,
+    cat: Array.from(AQ.cat), kk: Array.from(AQ.kk), prov: Array.from(AQ.prov),
+    plaatsen: aqVal("aq-plaats").split(/[,;]/).map(function(p){ return p.trim(); }).filter(Boolean),
+    van: van, tm: tm, m2van: m1, m2tm: m2, huur: parsePrijs(aqVal("aq-huur")),
     zit: zit ? parseInt(zit,10) : null,
-    email: document.getElementById("aq-email").value.trim()
+    vg: Array.from(AQ.vg), ter: document.getElementById("aq-ter").checked, wo: document.getElementById("aq-wo").checked,
+    onb: document.getElementById("aq-onb").checked,
+    freq: freq, email: aqVal("aq-email").trim()
   };
 }
+var FREQ_LABEL = {direct:"direct bij een nieuwe zaak", dag:"één keer per dag", week:"één keer per week"};
+function pfRegels(pf){
+  var r = [];
+  var soort = pf.cat.length ? pf.cat.map(function(c){return CATLABEL[c]||c;}).join(", ") : "alle soorten";
+  if(pf.kk.length) soort += " (" + pf.kk.map(function(k){return KK_LABEL[k]||k;}).join(", ") + ")";
+  r.push(["Soort", soort]);
+  r.push(["Regio", pf.plaatsen.length ? pf.plaatsen.join(", ") : (pf.prov.length ? pf.prov.join(", ") : "heel Nederland")]);
+  var b = pf.van!=null && pf.tm!=null ? fmtEUR(pf.van) + " tot " + fmtEUR(pf.tm) : (pf.tm!=null ? "tot " + fmtEUR(pf.tm) : (pf.van!=null ? "vanaf " + fmtEUR(pf.van) : "geen voorkeur"));
+  r.push(["Overnamesom", b]);
+  var g = [];
+  if(pf.m2van!=null || pf.m2tm!=null) g.push((pf.m2van!=null ? pf.m2van : "0") + (pf.m2tm!=null ? " tot " + pf.m2tm : "+") + " m²");
+  if(pf.zit) g.push(pf.zit + "+ zitplaatsen");
+  r.push(["Grootte", g.length ? g.join(", ") : "maakt niet uit"]);
+  r.push(["Huur pand", pf.huur ? "maximaal " + fmtEUR(pf.huur) + " per maand" : "geen maximum"]);
+  var w = pf.vg.map(function(v){return VG_LABEL[v]||v;});
+  if(pf.ter) w.push("terras"); if(pf.wo) w.push("woonruimte");
+  r.push(["Wensen", w.length ? w.join(", ") : "geen eisen"]);
+  return r;
+}
 function aqSummaryText(pf){
-  var parts = [];
-  parts.push("<b>Soort:</b> " + (pf.cat.length ? pf.cat.map(function(c){return CATLABEL[c]||c;}).join(", ") : "alle soorten"));
-  parts.push("<b>Regio:</b> " + (pf.plaats ? esc(pf.plaats) : (pf.prov.length ? pf.prov.map(esc).join(", ") : "heel Nederland")));
-  parts.push("<b>Budget:</b> " + (pf.budget ? "tot " + fmtEUR(pf.budget) : "geen maximum"));
-  parts.push("<b>Grootte:</b> " + (pf.zit ? pf.zit + "+ zitplaatsen" : "maakt niet uit"));
-  return parts.join("<br>");
+  return pfRegels(pf).map(function(x){ return "<b>" + x[0] + ":</b> " + esc(x[1]); }).join("<br>");
 }
 function aqShow(step){
   AQ.step = step;
   document.querySelectorAll("#alert-form .aq[data-q]").forEach(function(f){ f.hidden = parseInt(f.getAttribute("data-q"),10) !== step; });
-  document.getElementById("aq-done").hidden = step !== 6;
-  document.getElementById("alert-title").textContent = step === 6 ? "Gelukt" : AQ_TITLES[step];
-  document.getElementById("alert-step").textContent = step === 6 ? "" : "Vraag " + step + " van 5";
-  document.getElementById("aq-back").style.visibility = (step === 1 || step === 6) ? "hidden" : "visible";
+  document.getElementById("aq-done").hidden = step !== AQ_DONE;
+  document.getElementById("alert-title").textContent = step === AQ_DONE ? "Gelukt" : AQ_TITLES[step];
+  document.getElementById("alert-step").textContent = step === AQ_DONE ? "" : "Vraag " + step + " van " + AQ_N;
+  document.getElementById("aq-back").style.visibility = (step === 1 || step === AQ_DONE) ? "hidden" : "visible";
   var next = document.getElementById("aq-next");
-  next.textContent = step === 5 ? "Zet melding aan" : (step === 6 ? "Sluiten" : "Volgende");
-  if(step === 5) document.getElementById("aq-summary").innerHTML = aqSummaryText(aqProfile());
+  next.textContent = step === AQ_N ? "Zet melding aan" : (step === AQ_DONE ? "Sluiten" : "Volgende");
+  if(step === AQ_N) document.getElementById("aq-summary").innerHTML = aqSummaryText(aqProfile());
   document.getElementById("aq-error").hidden = true;
 }
 function openAlert(){
   // voorvullen met de actieve filters
-  AQ.cat = new Set(selCat); AQ.prov = new Set(selProv);
+  AQ.cat = new Set(selCat); AQ.prov = new Set(selProv); AQ.kk = new Set(); AQ.vg = new Set();
   document.getElementById("aq-plaats").value = document.getElementById("plaats-input").value.trim();
-  var tm = parsePrijs(document.getElementById("prijs-tm").value);
-  var radios = Array.prototype.slice.call(document.querySelectorAll('input[name="budget"]'));
-  var pick = radios.filter(function(r){ return r.value && tm && parseInt(r.value,10) >= tm; })[0] || radios.filter(function(r){ return r.value === ""; })[0];
-  radios.forEach(function(r){ r.checked = (r === pick); });
+  document.getElementById("aq-pvan").value = document.getElementById("prijs-van").value;
+  document.getElementById("aq-ptm").value = document.getElementById("prijs-tm").value;
+  ["aq-m2van","aq-m2tm","aq-huur"].forEach(function(id){ document.getElementById(id).value = ""; });
   document.querySelectorAll('input[name="zit"]').forEach(function(r){ r.checked = (r.value === ""); });
+  document.querySelectorAll('input[name="freq"]').forEach(function(r){ r.checked = (r.value === "dag"); });
+  document.getElementById("aq-ter").checked = false; document.getElementById("aq-wo").checked = false;
+  document.getElementById("aq-onb").checked = true;
   document.getElementById("aq-email").value = ""; document.getElementById("aq-ok").checked = false;
   aqChips(document.getElementById("aq-cat"), CATORDER, AQ.cat, function(c){ return CATLABEL[c]; });
+  aqChips(document.getElementById("aq-kk"), KK_ORDER, AQ.kk, function(k){ return KK_LABEL[k]; });
   aqChips(document.getElementById("aq-prov"), PROVN, AQ.prov);
+  aqVinkjes(document.getElementById("aq-vg"), VG_ORDER, AQ.vg, function(v){ return VG_LABEL[v]; });
   aqShow(1);
   document.getElementById("alert-overlay").classList.add("open");
   document.getElementById("a-close").focus();
 }
 function closeAlert(){ document.getElementById("alert-overlay").classList.remove("open"); }
+
+/* Zoekprofiel als extra filter op het aanbod. Kenmerken die een advertentie niet
+   vermeldt zijn "onbekend": die tonen we alleen als pf.onb aan staat. */
+function pfMatch(x){
+  var p = PF; if(!p) return true;
+  function ok(known, pass){ return known ? pass : p.onb; }
+  if(p.plaatsen.length){
+    var hay = fold((x.plaats||"") + " " + (x.provincie||""));
+    if(!p.plaatsen.some(function(q){ return hay.indexOf(fold(q)) !== -1; })) return false;
+  }
+  if(p.huur!=null && !ok(x.huur_pm!=null && x.huur_pm>0, x.huur_pm <= p.huur)) return false;
+  if(p.m2van!=null || p.m2tm!=null){
+    var kent = !!x.m2;
+    if(!ok(kent, (p.m2van==null || x.m2 >= p.m2van) && (p.m2tm==null || x.m2 <= p.m2tm))) return false;
+  }
+  if(p.zit){
+    var z = parseInt(x.zitplaatsen,10);
+    if(!ok(!isNaN(z) && z>0, z >= p.zit)) return false;
+  }
+  if(p.kk.length){
+    var kx = x.kk || [];
+    if(!ok(kx.length>0, p.kk.some(function(k){ return kx.indexOf(k) !== -1; }))) return false;
+  }
+  if(p.vg.length){
+    var vx = x.vg || [];
+    if(!ok(vx.length>0, p.vg.every(function(v){ return vx.indexOf(v) !== -1; }))) return false;
+  }
+  if(p.ter && !x.ter && !p.onb) return false;
+  if(p.wo && !x.wo && !p.onb) return false;
+  return true;
+}
+function updatePfBar(){
+  var bar = document.getElementById("pf-bar"); if(!bar) return;
+  bar.hidden = !PF;
+  if(PF){
+    var kort = pfRegels(PF).filter(function(r){ return !/^(geen|maakt niet uit|heel Nederland|alle soorten)/.test(r[1]); })
+      .map(function(r){ return "<b>" + r[0] + ":</b> " + esc(r[1]); }).join(" · ");
+    document.getElementById("pf-bar-text").innerHTML = "Gefilterd op je zoekprofiel" + (kort ? " — " + kort : "") + (PF.onb ? ". Zaken zonder deze gegevens tonen we ook." : ".");
+  }
+}
 function aqApplyToFilters(pf){
   selCat = new Set(pf.cat); selProv = new Set(pf.prov);
-  document.getElementById("plaats-input").value = pf.plaats || "";
-  document.getElementById("prijs-tm").value = pf.budget ? String(pf.budget) : "";
+  document.getElementById("plaats-input").value = "";
+  document.getElementById("prijs-van").value = pf.van ? String(pf.van) : "";
+  document.getElementById("prijs-tm").value = pf.tm ? String(pf.tm) : "";
+  PF = pf;
   SHOWN = 24; renderAll();
 }
 function aqSubmit(){
@@ -1256,14 +1401,13 @@ function aqSubmit(){
   if(!document.getElementById("aq-ok").checked){ err.textContent = "Vink aan dat je meldingen wilt ontvangen."; err.hidden = false; return; }
   try { localStorage.setItem("hm_profile", JSON.stringify(pf)); } catch(e){}
   var body = "Zoekprofiel HorecaMatch\n\n" +
-    "Soort: " + (pf.cat.length ? pf.cat.map(function(c){return CATLABEL[c]||c;}).join(", ") : "alle") + "\n" +
-    "Regio: " + (pf.plaats || (pf.prov.length ? pf.prov.join(", ") : "heel Nederland")) + "\n" +
-    "Budget: " + (pf.budget ? "tot " + fmtEUR(pf.budget) : "geen maximum") + "\n" +
-    "Zitplaatsen: " + (pf.zit ? pf.zit + "+" : "n.v.t.") + "\n" +
+    pfRegels(pf).map(function(r){ return r[0] + ": " + r[1]; }).join("\n") + "\n" +
+    "Meldingen: " + FREQ_LABEL[pf.freq] + "\n" +
+    "Ook zaken met onbekende gegevens: " + (pf.onb ? "ja" : "nee") + "\n" +
     "E-mail: " + pf.email + "\n";
   window.location.href = "mailto:info@horecamatch.nl?subject=" + encodeURIComponent("Zoekprofiel: " + pf.email) + "&body=" + encodeURIComponent(body);
   aqApplyToFilters(pf);
-  aqShow(6);
+  aqShow(AQ_DONE);
 }
 (function initAlert(){
   var ov = document.getElementById("alert-overlay");
@@ -1271,11 +1415,25 @@ function aqSubmit(){
   document.querySelectorAll("[data-open-alert]").forEach(function(b){ b.addEventListener("click", openAlert); });
   document.getElementById("a-close").addEventListener("click", closeAlert);
   ov.addEventListener("click", function(e){ if(e.target === ov) closeAlert(); });
-  document.getElementById("aq-back").addEventListener("click", function(){ if(AQ.step > 1 && AQ.step < 6) aqShow(AQ.step - 1); });
+  document.getElementById("aq-back").addEventListener("click", function(){ if(AQ.step > 1 && AQ.step < AQ_DONE) aqShow(AQ.step - 1); });
   document.getElementById("aq-next").addEventListener("click", function(){
-    if(AQ.step === 6){ closeAlert(); document.getElementById("market").scrollIntoView({behavior:"smooth", block:"start"}); return; }
-    if(AQ.step < 5){ aqShow(AQ.step + 1); return; }
+    if(AQ.step === AQ_DONE){ closeAlert(); document.getElementById("market").scrollIntoView({behavior:"smooth", block:"start"}); return; }
+    if(AQ.step < AQ_N){ aqShow(AQ.step + 1); return; }
     aqSubmit();
+  });
+  document.querySelectorAll("#aq-pre-prijs button").forEach(function(b){
+    b.addEventListener("click", function(){
+      document.getElementById("aq-pvan").value = b.getAttribute("data-van");
+      document.getElementById("aq-ptm").value = b.getAttribute("data-tm");
+    });
+  });
+  document.querySelectorAll("#aq-pre-huur button").forEach(function(b){
+    b.addEventListener("click", function(){ document.getElementById("aq-huur").value = b.getAttribute("data-v"); });
+  });
+  document.getElementById("pf-clear").addEventListener("click", function(){
+    PF = null; selCat = new Set(); selProv = new Set();
+    document.getElementById("prijs-van").value = ""; document.getElementById("prijs-tm").value = "";
+    SHOWN = 24; renderAll();
   });
   document.getElementById("alert-form").addEventListener("submit", function(e){ e.preventDefault(); document.getElementById("aq-next").click(); });
   document.addEventListener("keydown", function(e){ if(e.key === "Escape") closeAlert(); });
