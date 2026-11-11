@@ -1275,7 +1275,7 @@ var VG_ORDER = ["drank","exploitatie","laat"];
 var VG_LABEL = {drank:"Drank- en horecavergunning", exploitatie:"Exploitatievergunning", laat:"Ruime sluitingstijden / nachtvergunning"};
 var PF = null; /* actief zoekprofiel (filtert het aanbod); null = geen */
 /* Adres van de formulierdienst (bijv. https://formspree.io/f/xxxxxxxx). Leeg = het profiel gaat als mailtje. */
-var ALERT_ENDPOINT = "";
+var ALERT_ENDPOINT = "https://formspree.io/f/xwloeqdq";
 function aqVerstuur(pf, klaar){
   var payload = Object.assign({}, pf, {
     toestemming: true, tijdstip: new Date().toISOString(), pagina: location.href.split("#")[0],
