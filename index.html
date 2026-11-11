@@ -256,6 +256,21 @@ button{font-family:inherit}
 .cta-form input::placeholder{color:#8b8374}
 @media (max-width:640px){.cta-bar{flex-direction:column;align-items:stretch}.cta-form{flex-direction:column}.cta-form input{min-width:0}}
 
+/* gratis / pro */
+.plans{padding:48px 0;border-top:1px solid var(--line)}
+.plans h2{font-size:26px;margin-bottom:6px}
+.plans-lead{color:var(--ink-dim);font-size:14.5px;max-width:62ch;margin-bottom:22px}
+.plans-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;max-width:820px}
+.plan{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:20px;display:flex;flex-direction:column;gap:12px}
+.plan.pro{border-color:var(--accent)}
+.plan h3{font-size:18px}
+.plan-prijs{font-size:22px;font-weight:700;font-variant-numeric:tabular-nums}
+.plan-prijs small{font-size:13px;font-weight:400;color:var(--ink-dim)}
+.plan ul{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:6px;font-size:14px}
+.plan .btn{align-self:flex-start;margin-top:auto}
+.plan-note{font-size:12.5px;color:var(--ink-dim);margin-top:14px;max-width:62ch}
+@media (max-width:640px){.plans-grid{grid-template-columns:1fr}}
+
 /* faq */
 .faq{padding:48px 0;border-top:1px solid var(--line)}
 .faq h2{font-size:26px;margin-bottom:12px}
@@ -590,6 +605,36 @@ textarea.note{width:100%;border:1px solid var(--line);border-radius:8px;padding:
     </div>
   </section>
 
+  <section class="plans" id="pro">
+    <div class="wrap">
+      <h2>Gratis of Pro</h2>
+      <p class="plans-lead">Zoeken en alle vergelijkingen blijven gratis. Pro is voor wie niets wil missen: elke dag een melding, ook bij prijsverlagingen. Nieuwe aanmeldingen proberen Pro 14 dagen gratis, zonder betaalgegevens. De 14 dagen gaan in bij je eerste mail.</p>
+      <div class="plans-grid">
+        <div class="plan">
+          <h3>Gratis</h3>
+          <div class="plan-prijs">€ 0</div>
+          <ul>
+            <li>Alle zaken, filters en vergelijkingen</li>
+            <li>Waarde-indicatie, kostenoverzicht en checklist</li>
+            <li>1 zoekprofiel met een wekelijkse mail over nieuw aanbod (ook na je proefperiode)</li>
+          </ul>
+          <button class="btn" type="button" data-open-alert>Zoekprofiel instellen</button>
+        </div>
+        <div class="plan pro">
+          <h3>Pro</h3>
+          <div class="plan-prijs" id="pro-prijs">Prijs volgt</div>
+          <ul>
+            <li>Elke dag een mail bij nieuw aanbod</li>
+            <li>Melding bij prijsverlagingen</li>
+            <li>Tot 5 zoekprofielen tegelijk</li>
+          </ul>
+          <span id="pro-knop"></span>
+        </div>
+      </div>
+      <p class="plan-note" id="pro-note">Pro is nog niet beschikbaar.</p>
+    </div>
+  </section>
+
   <section class="cta" id="cta">
     <div class="wrap cta-bar">
       <div class="cta-text">
@@ -614,7 +659,7 @@ textarea.note{width:100%;border:1px solid var(--line);border-radius:8px;padding:
     <div class="foot-grid">
       <div>© <span id="foot-year"></span> HorecaMatch — laatste marktscan: <span id="foot-snap">–</span></div>
       <div>Data afkomstig van openbare aanbodsites, uitsluitend zaken waar dataverzameling is toegestaan.</div>
-      <div><a href="over.html" style="color:inherit">Over</a> · <a href="privacy.html" style="color:inherit">Privacy</a> · <a href="contact.html" style="color:inherit">Contact</a> — vraag, correctie, of je aanbod laten meelopen?</div>
+      <div><a href="over.html" style="color:inherit">Over</a> · <a href="hoe-rekenen-we.html" style="color:inherit">Hoe we rekenen</a> · <a href="privacy.html" style="color:inherit">Privacy</a> · <a href="contact.html" style="color:inherit">Contact</a> — vraag, correctie, of je aanbod laten meelopen?</div>
     </div>
   </div>
 </footer>
@@ -706,9 +751,8 @@ textarea.note{width:100%;border:1px solid var(--line);border-radius:8px;padding:
         <label class="aq-field"><span>E-mailadres</span><input type="email" id="aq-email" placeholder="jouw@email.nl" required autocomplete="email"></label>
         <p class="aq-sub">Hoe vaak?</p>
         <div class="aq-radios aq-radios-row" id="aq-freq">
-          <label><input type="radio" name="freq" value="direct"> Direct bij een nieuwe zaak</label>
-          <label><input type="radio" name="freq" value="dag" checked> Eén keer per dag</label>
-          <label><input type="radio" name="freq" value="week"> Eén keer per week</label>
+          <label><input type="radio" name="freq" value="dag" checked> Elke dag · 14 dagen gratis <a href="#pro" id="aq-pro-link">Pro</a></label>
+          <label><input type="radio" name="freq" value="week"> Eén keer per week · gratis</label>
         </div>
         <label class="aq-check"><input type="checkbox" id="aq-ok" required> Ik wil meldingen ontvangen die bij dit profiel passen en ga akkoord met de <a href="privacy.html" target="_blank" rel="noopener">privacyverklaring</a>. Afmelden kan altijd.</label>
         <p class="aq-error" id="aq-error" hidden></p>
@@ -1281,6 +1325,24 @@ var VG_LABEL = {drank:"Drank- en horecavergunning", exploitatie:"Exploitatieverg
 var PF = null; /* actief zoekprofiel (filtert het aanbod); null = geen */
 /* Adres van de formulierdienst (bijv. https://formspree.io/f/xxxxxxxx). Leeg = het profiel gaat als mailtje. */
 var ALERT_ENDPOINT = "https://formspree.io/f/xwloeqdq";
+/* Pro: pas invullen als het betaalde abonnement klaar is. PRO_LINK = Stripe Payment Link, PRO_PRIJS bv. "€ 9,50" */
+var PRO_LINK = "";
+var PRO_PRIJS = "";
+function proLink(email){
+  if(!PRO_LINK) return "";
+  return PRO_LINK + (PRO_LINK.indexOf("?") < 0 ? "?" : "&") + "prefilled_email=" + encodeURIComponent(email || "");
+}
+(function initPro(){
+  var prijs = document.getElementById("pro-prijs"), knop = document.getElementById("pro-knop"), note = document.getElementById("pro-note");
+  if(!prijs) return;
+  if(PRO_PRIJS) prijs.innerHTML = esc(PRO_PRIJS) + " <small>per maand, maandelijks opzegbaar</small>";
+  if(PRO_LINK){
+    knop.innerHTML = '<a class="btn btn-primary" href="' + esc(proLink("")) + '" rel="noopener">Pro nemen</a>';
+    note.textContent = "Betalen met iDEAL of incasso via Stripe. Je kunt maandelijks opzeggen.";
+  } else {
+    knop.innerHTML = '<button class="btn" type="button" disabled>Binnenkort beschikbaar</button>';
+  }
+})();
 function aqVerstuur(pf, klaar){
   var payload = Object.assign({}, pf, {
     soort: "zoekprofiel", toestemming: true, tijdstip: new Date().toISOString(), pagina: location.href.split("#")[0],
@@ -1333,7 +1395,7 @@ function aqProfile(){
     freq: freq, email: aqVal("aq-email").trim()
   };
 }
-var FREQ_LABEL = {direct:"direct bij een nieuwe zaak", dag:"één keer per dag", week:"één keer per week"};
+var FREQ_LABEL = {dag:"elke dag (14 dagen gratis Pro)", week:"één keer per week"};
 function pfRegels(pf){
   var r = [];
   var soort = pf.cat.length ? pf.cat.map(function(c){return CATLABEL[c]||c;}).join(", ") : "alle soorten";
@@ -1451,7 +1513,13 @@ function aqSubmit(){
   var knop = document.getElementById("aq-next"); knop.disabled = true; knop.textContent = "Bezig…";
   aqVerstuur(pf, function(ok){
     knop.disabled = false;
-    if(ok) tekst.innerHTML = 'Je zoekprofiel is opgeslagen. We versturen op dit moment nog geen meldingen; zodra dat wel zo is, krijg je een mail bij nieuwe zaken die bij je profiel passen. Afmelden kan altijd via <a href="contact.html?soort=afmelden">het contactformulier</a>.';
+    if(ok){
+      var basis = 'Je zoekprofiel is opgeslagen. We versturen op dit moment nog geen meldingen; zodra dat wel zo is, krijg je een mail bij nieuwe zaken die bij je profiel passen. Afmelden kan altijd via <a href="contact.html?soort=afmelden">het contactformulier</a>.';
+      if(pf.freq === "dag"){
+        basis += ' Je probeert Pro 14 dagen gratis, vanaf je eerste mail: elke dag een melding, ook bij prijsverlagingen. Daarna krijg je elke week een mail, tenzij je Pro neemt' + (PRO_LINK ? ' (<a href="' + esc(proLink(pf.email)) + '" rel="noopener">Pro nemen</a>)' : '') + '.';
+      }
+      tekst.innerHTML = basis;
+    }
     else tekst.innerHTML = 'Opslaan is niet gelukt. Probeer het later nog eens, of laat het ons weten via <a href="contact.html">het contactformulier</a>. Je filters zijn wel ingesteld op dit profiel.';
     afronden();
   });
@@ -1566,7 +1634,7 @@ function initFaq(){
     ["Hoe vaak wordt de site bijgewerkt?", "Elke ochtend automatisch. Nieuw aanbod, prijswijzigingen en verkopen worden dan verwerkt."],
     ["Hoe werkt de verkocht-detectie?", "Als een zaak niet meer in het aanbod van een bron voorkomt terwijl die bron zelf wel succesvol is gescand, markeren we hem als vermoedelijk verkocht en berekenen we hoeveel dagen hij te koop stond."],
     ["Wat betekent 'onderhandelingsruimte'?", "Een inschatting op basis van hoe lang een zaak al te koop staat en of de vraagprijs al eens is verlaagd. Geen garantie, wel een handig startpunt voor een gesprek."],
-    ["Kan ik ook een melding per mail krijgen?", 'Ja. Klik op "Ontvang alerts" en beantwoord vijf korte vragen (soort zaak, regio, budget, grootte, e-mail). Je krijgt dan een mail zodra er aanbod bijkomt of een prijs daalt dat bij jouw profiel past.']
+    ["Kan ik ook een melding per mail krijgen?", 'Ja. Klik op "Ontvang alerts" en beantwoord vijf korte vragen (soort zaak, regio, budget, grootte, e-mail). Je probeert Pro eerst 14 dagen gratis, zonder betaalgegevens: elke dag een mail, ook bij prijsverlagingen, en tot vijf zoekprofielen. Daarna krijg je gratis elke week een mail met nieuw aanbod, of je neemt Pro.']
   ];
   document.getElementById("faq-list").innerHTML = items.map(function(it,i){
     return '<div class="faq-item" data-idx="' + i + '"><button class="faq-q" aria-expanded="false">' + esc(it[0]) + '<span class="chevron" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span></button><div class="faq-a">' + it[1] + "</div></div>";
