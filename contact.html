@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="nl"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Contact | HorecaMatch</title>
+<meta name="description" content="Stel een vraag, geef een correctie door of vraag om verwijdering van je gegevens.">
+<link rel="canonical" href="https://zuenet070.github.io/horecamatch/contact.html">
+<link rel="icon" href="https://zuenet070.github.io/horecamatch/favicon.svg" type="image/svg+xml">
+<meta name="theme-color" content="#18140f">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://zuenet070.github.io/horecamatch/stijl.css">
+</head><body>
+<header class="topbar"><div class="wrap topbar-in"><a class="logo" href="https://zuenet070.github.io/horecamatch/"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.59 13.41 11 3.83A2 2 0 0 0 9.59 3.24L4 3a1 1 0 0 0-1 1l.24 5.59a2 2 0 0 0 .59 1.41l9.58 9.58a2 2 0 0 0 2.83 0l4.35-4.35a2 2 0 0 0 0-2.82Z"/><circle cx="7.5" cy="7.5" r="1.1" fill="currentColor" stroke="none"/></svg>HorecaMatch</a><nav class="nav" aria-label="Hoofdmenu"><a href="https://zuenet070.github.io/horecamatch/over.html">Over</a><a href="https://zuenet070.github.io/horecamatch/privacy.html">Privacy</a><a href="https://zuenet070.github.io/horecamatch/contact.html" aria-current="page">Contact</a></nav></div></header>
+<main class="wrap">
+
+<h1>Contact</h1>
+<p class="lead">Een vraag, een correctie, een zaak die ontbreekt of een verzoek over je gegevens? Laat het hier weten.</p>
+<form id="cf">
+  <label>Waar gaat het over?
+    <select id="c-soort" name="soort" required>
+      <option value="vraag">Een vraag of opmerking</option>
+      <option value="correctie">Een correctie bij een zaak</option>
+      <option value="aanbod">Mijn aanbod laten meelopen of weghalen</option>
+      <option value="afmelden">Afmelden of mijn gegevens verwijderen</option>
+    </select>
+  </label>
+  <label>Je e-mailadres
+    <input type="email" name="email" required autocomplete="email" placeholder="jouw@email.nl">
+  </label>
+  <label>Je bericht
+    <textarea name="bericht" required placeholder="Zet erbij om welke zaak het gaat, of met welk e-mailadres je je hebt aangemeld."></textarea>
+  </label>
+  <div class="hp" aria-hidden="true"><label>Niet invullen<input type="text" name="_gotcha" tabindex="-1" autocomplete="off"></label></div>
+  <button class="btn" id="c-knop" type="submit">Versturen</button>
+  <p class="melding" id="c-melding" role="status" hidden></p>
+</form>
+<p class="meta" style="margin-top:22px">Wat we met je gegevens doen, staat in de <a href="https://zuenet070.github.io/horecamatch/privacy.html">privacyverklaring</a>.</p>
+
+</main>
+<footer><div class="wrap"><div>© <span id="jaar"></span> HorecaMatch</div><div class="fnav"><a href="https://zuenet070.github.io/horecamatch/">Aanbod</a><a href="https://zuenet070.github.io/horecamatch/over.html">Over</a><a href="https://zuenet070.github.io/horecamatch/privacy.html">Privacy</a><a href="https://zuenet070.github.io/horecamatch/contact.html">Contact</a></div></div></footer>
+<script>document.getElementById("jaar").textContent=new Date().getFullYear();var FORM_URL='https://formspree.io/f/xwloeqdq';
+(function(){
+  var f=document.getElementById('cf'); if(!f) return;
+  var q=new URLSearchParams(location.search), s=q.get('soort');
+  if(s){ var sel=document.getElementById('c-soort'); for(var i=0;i<sel.options.length;i++){ if(sel.options[i].value===s) sel.selectedIndex=i; } }
+  var m=document.getElementById('c-melding'), knop=document.getElementById('c-knop');
+  function toon(t,k){ m.className='melding '+k; m.textContent=t; m.hidden=false; }
+  f.addEventListener('submit',function(ev){
+    ev.preventDefault();
+    if(f.elements['_gotcha'].value) return;
+    var data={soort:f.elements['soort'].value, email:f.elements['email'].value.trim(), bericht:f.elements['bericht'].value.trim(),
+      pagina:location.href.split('#')[0], tijdstip:new Date().toISOString(), _subject:'Contact: '+f.elements['soort'].selectedOptions[0].text};
+    knop.disabled=true; knop.textContent='Bezig...'; m.hidden=true;
+    fetch(FORM_URL,{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify(data)})
+      .then(function(r){ if(!r.ok) throw new Error('HTTP '+r.status); f.reset(); toon('Bedankt, je bericht is verstuurd. We reageren binnen een week, bij een verzoek over je gegevens binnen een maand.','ok'); })
+      .catch(function(){ toon('Versturen is niet gelukt. Probeer het later nog eens.','fout'); })
+      .then(function(){ knop.disabled=false; knop.textContent='Versturen'; });
+  });
+})();
+</script>
+</body></html>
